@@ -64,3 +64,112 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Checklist
+
+### Inhoud
+- [ ] Maak een website met Laravel (minstens versie 11)
+- [ ] Zorg voor dynamisch gegevens ophalen en wegschrijven naar een database
+- [ ] Vermijd het copy/pasten van een complete online tutorial
+- [ ] Gebruik online informatiebronnen als:
+  - [ ] Je de code begrijpt en kan uitleggen
+  - [ ] Correcte bronvermelding toevoegt voor gebruikte code
+- [ ] Kies zelf het onderwerp van je project (bijv. zaak van familielid, sportclub, muziekfestival)
+
+### Functionele minimum requirements
+- [ ] Informatieve data-driven website met de volgende features:
+
+#### Login systeem
+- [ ] Bezoekers kunnen inloggen
+- [ ] Bezoekers kunnen een nieuwe account aanmaken
+- [ ] Useraccount kan gewone gebruiker of admin zijn
+- [ ] Enkel admins kunnen andere gebruikers verheffen tot admin en deze rechten afnemen
+- [ ] Enkel admins kunnen manueel een nieuwe gebruiker aanmaken
+
+#### Profielpagina
+- [ ] Elke gebruiker heeft een publieke profielpagina toegankelijk voor iedereen
+- [ ] Ingelogde gebruikers kunnen hun eigen data aanpassen
+- [ ] Profiel bevat de volgende gegevens:
+  - [ ] Username
+  - [ ] Verjaardag
+  - [ ] Profielfoto (op webserver bewaard)
+  - [ ] "Over mij" tekst
+
+#### Laatste nieuwtjes
+- [ ] Admins kunnen nieuwsitems toevoegen, wijzigen en verwijderen
+- [ ] Bezoekers kunnen alle nieuwtjes en een detail per nieuwtje bekijken
+- [ ] Nieuwsitems bevatten:
+  - [ ] Titel
+  - [ ] Afbeelding (opgeslagen op de server)
+  - [ ] Content
+  - [ ] Publicatiedatum
+
+#### FAQ pagina
+- [ ] FAQ-pagina bevat vragen en antwoorden, gegroepeerd per categorie
+- [ ] Admins kunnen categorieën en vraag/antwoorden toevoegen, wijzigen en verwijderen
+- [ ] Bezoekers kunnen de FAQ zien
+
+#### Contact pagina
+- [ ] Bezoekers kunnen een contactformulier invullen
+- [ ] Admin ontvangt een email met de inhoud van het formulier bij versturen
+
+### Extra features
+- [ ] Overzicht van ingevulde contactformulieren voor admins in een admin-panel
+- [ ] Gebruikers kunnen commentaar achterlaten op nieuwtjes
+- [ ] Gebruikers kunnen berichten posten op andere profielen of privéberichten sturen
+- [ ] Gebruikers kunnen FAQ-vragen toevoegen
+- [ ] Voeg logische extra features toe passend bij het projectonderwerp
+
+### Technische requirements
+
+#### Views
+- [ ] Gebruik minstens twee layouts
+- [ ] Gebruik componenten waar passend
+- [ ] Gebruik cursus- en oefeningstechnieken
+
+#### Control structures
+- [ ] XSS protection
+- [ ] CSRF protection
+- [ ] Client-side validation
+
+#### Routes
+- [ ] Alle routes gebruiken controller methods
+- [ ] Routes bevatten benodigde middleware
+- [ ] Groepeer routes indien mogelijk
+
+#### Controllers
+- [ ] Gebruik controllers voor logica-opdeling
+- [ ] Gebruik resource controllers voor CRUD-operaties
+
+#### Models
+- [ ] Gebruik Eloquent models per entiteit
+- [ ] Maak gebruik van relaties:
+  - [ ] Minstens één one-to-many relatie
+  - [ ] Minstens één many-to-many relatie
+
+#### Database
+- [ ] Database moet werken met `php artisan migrate:fresh --seed`
+- [ ] Database bevat alle benodigde basisdata
+
+#### Authentication
+- [ ] Basisfunctionaliteiten:
+  - [ ] Log in/out
+  - [ ] 'Remember me'
+  - [ ] Registreren
+  - [ ] Wachtwoord reset bij vergeten wachtwoord
+- [ ] Voeg één default admin toe (gebruikersnaam: admin, email: admin@ehb.be, wachtwoord: Password!321)
+
+#### Layout
+- [ ] Zorg voor een duidelijke en professionele layout
+
+#### GIT
+- [ ] Gebruik een GitHub repo voor het project
+- [ ] Voeg 'vendor' en 'node_modules' toe aan `.gitignore`
+- [ ] Voeg een `readme.md` toe met:
+  - [ ] Stappen om project te laten werken
+  - [ ] Bronvermeldingen
+  - [ ] Andere belangrijke projectinformatie
+
+### Inzenden
+- [ ] Submit de link naar de GitHub repo via Canvas en zorg voor toegang
+
