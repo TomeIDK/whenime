@@ -15,18 +15,6 @@ Route::get('/faq', function () {
     return view('faq');
 })-> name("faq");
 
-Route::get('/login', function () {
-    return view('login');
-})-> name("login");
-
-Route::get('/register', function () {
-    return view('register');
-})-> name("register");
-
-Route::get('/forgot-password', function () {
-    return view('forgot-password');
-})-> name("forgot-password");
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

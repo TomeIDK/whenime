@@ -3,7 +3,7 @@
 @section('title', 'Whenime')
 
 @section('header')
-    @include('components.guest-menu')
+    @include('components.menu')
 @endsection
 
 
