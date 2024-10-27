@@ -1,6 +1,6 @@
 @extends('layouts.guest')
 
-@section('title', 'Whenime - Register')
+@section('title', 'Register')
 
 @section('content')
     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
