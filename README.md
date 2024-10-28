@@ -111,7 +111,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 #### Contact pagina
 - [x] Bezoekers kunnen een contactformulier invullen
-- [ ] Admin ontvangt een email met de inhoud van het formulier bij versturen
+- [x] Admin ontvangt een email met de inhoud van het formulier bij versturen
 
 ### Extra features
 - [ ] Overzicht van ingevulde contactformulieren voor admins in een admin-panel
