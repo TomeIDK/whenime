@@ -6,17 +6,17 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CtaButton extends Component
+class AccordionItem extends Component
 {
-    public $text;
-    public $class;
+    public $title;
+    public $content;
     /**
      * Create a new component instance.
      */
-    public function __construct($text, $class = '')
+    public function __construct($title, $content)
     {
-        $this->text = $text;
-        $this->class = $class;
+        $this->title = $title;
+        $this->content = $content;
     }
 
     /**
@@ -24,6 +24,6 @@ class CtaButton extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.cta-button');
+        return view('components.accordion-item');
     }
 }

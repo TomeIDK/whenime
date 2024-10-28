@@ -11,8 +11,8 @@
 
 @yield('header')
 
-<body class="bg-white">
-    <main>
+<body class="bg-white flex flex-col min-h-screen">
+    <main class="flex-grow">
         @yield('content')
     </main>
 </body>

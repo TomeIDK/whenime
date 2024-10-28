@@ -10,9 +10,10 @@
                     <div class="flex-none">
                         {{-- Links --}}
                         <ul class="menu menu-horizontal px-1">
-                            <li><a href="{{ route('home') }}" class="btn nav-link btn-tertiary">Home</a></li>
-                            <li><a href="{{ route('about') }}" class="btn nav-link btn-tertiary">About</a></li>
-                            <li><a href="{{ route('faq') }}" class="btn nav-link btn-tertiary">FAQ</a></li>
+                            <li><x-nav-link route="{{ route('home') }}" text="Home" /></li>
+                            <li><x-nav-link route="{{ route('news') }}" text="News" /></li>
+                            <li><x-nav-link route="{{ route('faq') }}" text="FAQ" /></li>
+                            <li><x-nav-link route="{{ route('contact') }}" text="Contact" /></li>
                         </ul>
                     </div>
                 </div>
@@ -51,15 +52,15 @@
                                         My Schedule
                                     </a>
                                 </li>
-                                <li><a class="btn btn-sm bg-primary text-white font-bold border-none hover:bg-primary-hover-dark">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                <li>
+                                    <x-cta-nav-link route="{{ route('home') }}" class="btn-sm font-bold"
+                                        text='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 24 22" fill="none" stroke="#ffffff" stroke-width="3"
                                             stroke-linecap="round" stroke-linejoin="bevel">
                                             <line x1="12" y1="5" x2="12" y2="19"></line>
                                             <line x1="5" y1="12" x2="19" y2="12"></line>
                                         </svg>
-                                        Add Anime
-                                    </a>
+                                        Add Anime' />
                                 </li>
                             </ul>
                             {{-- Profile Picture --}}
@@ -103,6 +104,23 @@
                                             </a>
                                         </div>
                                     </li>
+                                    @admin
+                                        <li>
+                                            <div class="flex items-center gap-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="bevel">
+                                                    <rect x="3" y="11" width="18" height="11" rx="2"
+                                                        ry="2">
+                                                    </rect>
+                                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                                </svg>
+                                                <a class="mb-1" />
+                                                Admin Dashboard
+                                                </a>
+                                            </div>
+                                        </li>
+                                    @endadmin
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}" class="inline">
                                             @csrf

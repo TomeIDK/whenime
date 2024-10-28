@@ -6,15 +6,17 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CtaButton extends Component
+class CtaNavLink extends Component
 {
+    public $route;
     public $text;
     public $class;
     /**
      * Create a new component instance.
      */
-    public function __construct($text, $class = '')
+    public function __construct($route, $text, $class = '')
     {
+        $this->route = $route;
         $this->text = $text;
         $this->class = $class;
     }
@@ -24,6 +26,6 @@ class CtaButton extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.cta-button');
+        return view('components.cta-nav-link');
     }
 }

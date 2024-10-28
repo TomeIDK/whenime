@@ -17,12 +17,13 @@
                 @csrf
                 <div class="max-w-lg">
                     <div class="label">
-                <p class="mb-4 text-sm text-text label-text">
-                    Forgot your password? No problem. Just let us know your email address and we will email you a password
-                    reset
-                    link
-                    that will allow you to choose a new one.
-                </p>
+                        <p class="mb-4 text-sm text-text label-text">
+                            Forgot your password? No problem. Just let us know your email address and we will email you a
+                            password
+                            reset
+                            link
+                            that will allow you to choose a new one.
+                        </p>
                     </div>
 
                     <label class="input input-bordered flex items-center gap-2">

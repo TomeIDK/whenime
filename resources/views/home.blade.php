@@ -16,7 +16,7 @@
                 <p class="py-6 text-text drop-shadow-md">
                     Personalized calendars for your favorite airing anime.
                 </p>
-                <a href="{{ route("register") }}" class="btn border-none shadow-none bg-primary text-white hover:bg-primary-hover-dark">Get Started</a>
+                <x-cta-nav-link route="{{ route('register') }}" text="Get Started" />
             </div>
                         <div class="flex justify-center lg:w-1/2">
             <img src="https://placehold.co/1200?text=Hello+World&font=roboto" class="rounded-lg shadow-2xl" />

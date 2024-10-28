@@ -1,19 +1,30 @@
 <?php
 
+use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+// Home Route
 Route::get('/', function () {
     return view('home');
 })-> name("home");
 
-Route::get('/about', function () {
-    return view('about');
-})-> name("about");
+// News Routes
+Route::get('/news', function () {
+    return view('news');
+})-> name("news");
 
+// FAQ Routes
 Route::get('/faq', function () {
     return view('faq');
 })-> name("faq");
+
+// Contact Routes
+Route::get('/contact', [ContactFormController::class, 'create'])
+    ->name('contact');
+
+Route::post('/contact', [ContactFormController::class, 'store'])
+    ->name('contact.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

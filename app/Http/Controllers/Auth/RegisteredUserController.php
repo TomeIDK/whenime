@@ -57,7 +57,6 @@ class RegisteredUserController extends Controller
                 Rules\Password::min(6)
                 ->mixedCase()
                 ->numbers()
-                ->uncompromised()
             ],
             'date_of_birth' => [
                 'nullable', 

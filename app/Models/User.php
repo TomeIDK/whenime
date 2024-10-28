@@ -21,6 +21,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'is_admin', //TODO: REMOVE THIS FROM $fillable
         'date_of_birth',
         'profile_picture',
     ];
@@ -47,4 +48,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
 }

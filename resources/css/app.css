@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .btn-tertiary {
     @apply border-none shadow-none bg-background hover:bg-background hover:border-none hover:text-primary-hover-dark;
 }
