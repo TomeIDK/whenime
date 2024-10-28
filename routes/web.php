@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactFormController;
+use App\Http\Controllers\FAQController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,21 @@ Route::get('/news', function () {
 })-> name("news");
 
 // FAQ Routes
-Route::get('/faq', function () {
-    return view('faq');
-})-> name("faq");
+
+// Public FAQ view
+Route::get('/faq',  [FAQController::class, 'index'])->name('faq');
+
+// Admin edit FAQ view
+Route::get('/faq/edit/{category}', [FAQController::class, 'edit'])
+    // ->middleware('can:edit-faq')    
+    ->name('faq.edit');
+
+// FAQ CRUD
+Route::put('/faq/update/{id}', [FAQController::class, 'update'])->name('faq.update');
+Route::delete('/faq/delete/{id}', [FAQController::class, 'destroy'])->name('faq.destroy');
+Route::post('/faq/store', [FAQController::class, 'store'])->name('faq.store');
+
+
 
 // Contact Routes
 Route::get('/contact', [ContactFormController::class, 'create'])

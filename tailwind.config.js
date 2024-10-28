@@ -30,6 +30,18 @@ export default {
                 neutral: "#2E3A59",
                 text: "#333333",
                 background: "#F8F8F8",
+                success: {
+                    DEFAULT: "#10B981",
+                    hover: "#059669",
+                },
+                delete: {
+                    DEFAULT: "#EF4444",
+                    hover: "#DC2626",
+                },
+                discard: {
+                    DEFAULT: "#6B7280",
+                    hover: "#4B5563",
+                },
             },
         },
     },
