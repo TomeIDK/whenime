@@ -105,12 +105,12 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
   - [ ] Publicatiedatum
 
 #### FAQ pagina
-- [ ] FAQ-pagina bevat vragen en antwoorden, gegroepeerd per categorie
+- [x] FAQ-pagina bevat vragen en antwoorden, gegroepeerd per categorie
 - [ ] Admins kunnen categorieën en vraag/antwoorden toevoegen, wijzigen en verwijderen
-- [ ] Bezoekers kunnen de FAQ zien
+- [x] Bezoekers kunnen de FAQ zien
 
 #### Contact pagina
-- [ ] Bezoekers kunnen een contactformulier invullen
+- [x] Bezoekers kunnen een contactformulier invullen
 - [ ] Admin ontvangt een email met de inhoud van het formulier bij versturen
 
 ### Extra features
