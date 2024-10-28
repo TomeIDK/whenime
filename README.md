@@ -68,21 +68,21 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## Checklist
 
 ### Inhoud
-- [ ] Maak een website met Laravel (minstens versie 11)
+- [x] Maak een website met Laravel (minstens versie 11)
 - [ ] Zorg voor dynamisch gegevens ophalen en wegschrijven naar een database
-- [ ] Vermijd het copy/pasten van een complete online tutorial
-- [ ] Gebruik online informatiebronnen als:
-  - [ ] Je de code begrijpt en kan uitleggen
-  - [ ] Correcte bronvermelding toevoegt voor gebruikte code
+- [x] Vermijd het copy/pasten van een complete online tutorial
+- [x] Gebruik online informatiebronnen als:
+  - [x] Je de code begrijpt en kan uitleggen
+  - [x] Correcte bronvermelding toevoegt voor gebruikte code
 - [ ] Kies zelf het onderwerp van je project (bijv. zaak van familielid, sportclub, muziekfestival)
 
 ### Functionele minimum requirements
 - [ ] Informatieve data-driven website met de volgende features:
 
 #### Login systeem
-- [ ] Bezoekers kunnen inloggen
-- [ ] Bezoekers kunnen een nieuwe account aanmaken
-- [ ] Useraccount kan gewone gebruiker of admin zijn
+- [x] Bezoekers kunnen inloggen
+- [x] Bezoekers kunnen een nieuwe account aanmaken
+- [x] Useraccount kan gewone gebruiker of admin zijn
 - [ ] Enkel admins kunnen andere gebruikers verheffen tot admin en deze rechten afnemen
 - [ ] Enkel admins kunnen manueel een nieuwe gebruiker aanmaken
 
@@ -90,9 +90,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [ ] Elke gebruiker heeft een publieke profielpagina toegankelijk voor iedereen
 - [ ] Ingelogde gebruikers kunnen hun eigen data aanpassen
 - [ ] Profiel bevat de volgende gegevens:
-  - [ ] Username
-  - [ ] Verjaardag
-  - [ ] Profielfoto (op webserver bewaard)
+  - [x] Username
+  - [x] Verjaardag
+  - [x] Profielfoto (op webserver bewaard)
   - [ ] "Over mij" tekst
 
 #### Laatste nieuwtjes
@@ -152,20 +152,20 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [ ] Database bevat alle benodigde basisdata
 
 #### Authentication
-- [ ] Basisfunctionaliteiten:
-  - [ ] Log in/out
-  - [ ] 'Remember me'
-  - [ ] Registreren
-  - [ ] Wachtwoord reset bij vergeten wachtwoord
-- [ ] Voeg één default admin toe (gebruikersnaam: admin, email: admin@ehb.be, wachtwoord: Password!321)
+- [x] Basisfunctionaliteiten:
+  - [x] Log in/out
+  - [x] 'Remember me'
+  - [x] Registreren
+  - [x] Wachtwoord reset bij vergeten wachtwoord
+- [x] Voeg één default admin toe (gebruikersnaam: admin, email: admin@ehb.be, wachtwoord: Password!321)
 
 #### Layout
 - [ ] Zorg voor een duidelijke en professionele layout
 
 #### GIT
-- [ ] Gebruik een GitHub repo voor het project
-- [ ] Voeg 'vendor' en 'node_modules' toe aan `.gitignore`
-- [ ] Voeg een `readme.md` toe met:
+- [x] Gebruik een GitHub repo voor het project
+- [x] Voeg 'vendor' en 'node_modules' toe aan `.gitignore`
+- [x] Voeg een `readme.md` toe met:
   - [ ] Stappen om project te laten werken
   - [ ] Bronvermeldingen
   - [ ] Andere belangrijke projectinformatie
