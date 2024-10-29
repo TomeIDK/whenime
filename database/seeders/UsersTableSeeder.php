@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             'profile_picture' => 'profile_pictures/oKqlktptLhwtn6y49bGfN9G5GThjURaSdkSNUpi5.png',
             'email' => 'cecepas@hotmail.com',
             'email_verified_at' => null,
-            'password' => '$2y$12$X/S8eelk3mczY.NZtLLSpuc3zzRfUYBo57MwwYdOXT44POaiSfm1i', // Ensure this password is hashed
+            'password' => '$2y$12$X/S8eelk3mczY.NZtLLSpuc3zzRfUYBo57MwwYdOXT44POaiSfm1i',
             'is_admin' => 0,
             'remember_token' => 'WLAxaZTgR80Ulr1ZxGiBfVPPeCOySOKnSLYccFNdoib3vbLcamBqXNTVf8Xk',
             'created_at' => '2024-10-27 10:09:00',
