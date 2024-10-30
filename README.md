@@ -87,13 +87,13 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [ ] Enkel admins kunnen manueel een nieuwe gebruiker aanmaken
 
 #### Profielpagina
-- [ ] Elke gebruiker heeft een publieke profielpagina toegankelijk voor iedereen
-- [ ] Ingelogde gebruikers kunnen hun eigen data aanpassen
-- [ ] Profiel bevat de volgende gegevens:
+- [x] Elke gebruiker heeft een publieke profielpagina toegankelijk voor iedereen
+- [x] Ingelogde gebruikers kunnen hun eigen data aanpassen
+- [x] Profiel bevat de volgende gegevens:
   - [x] Username
   - [x] Verjaardag
   - [x] Profielfoto (op webserver bewaard)
-  - [ ] "Over mij" tekst
+  - [x] "Over mij" tekst
 
 #### Laatste nieuwtjes
 - [ ] Admins kunnen nieuwsitems toevoegen, wijzigen en verwijderen
