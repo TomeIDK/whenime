@@ -24,8 +24,6 @@ Route::patch('/faq/update/{category}', [FAQController::class, 'update'])->name('
 Route::delete('/faq/delete/{id}', [FAQController::class, 'destroy'])->name('faq.destroy');
 Route::post('/faq/store', [FAQController::class, 'store'])->name('faq.store');
 
-
-
 // Contact Routes
 Route::get('/contact', [ContactFormController::class, 'create'])
     ->name('contact');
@@ -33,10 +31,13 @@ Route::get('/contact', [ContactFormController::class, 'create'])
 Route::post('/contact', [ContactFormController::class, 'store'])
     ->name('contact.store');
 
-    // Profile Routes
+// Profile Routes
+Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile');
+
+
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/{username}', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

@@ -65,7 +65,7 @@ class RegisteredUserController extends Controller
             'profile_picture' => [ // only jpg or png, max 2 MB
                 'nullable', 
                 'image', 
-                'mimes:jpg,png', 
+                'mimes:jpg,jpeg,png', 
                 'max:2048'
             ], 
         ]);

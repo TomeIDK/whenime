@@ -9,7 +9,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-@yield('header')
+@include('components.menu')
+
 
 <body class="bg-white flex flex-col min-h-screen">
     <main class="flex-grow">

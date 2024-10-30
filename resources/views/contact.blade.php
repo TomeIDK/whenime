@@ -1,10 +1,6 @@
-@extends('layouts.guest')
+@extends('layouts.base')
 
 @section('title', 'Contact')
-
-@section('header')
-    @include('components.menu')
-@endsection
 
 
 @section('content')

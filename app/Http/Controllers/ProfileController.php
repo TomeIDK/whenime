@@ -3,38 +3,68 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+
 class ProfileController extends Controller
 {
+    // Show user's profile
+    public function show($username){
+        $user = User::where('username', $username)->firstOrFail();
+
+        $isCurrentUser = Auth::check() && Auth::user()->username === $username;
+
+        return view('profile.profile', compact('user', 'isCurrentUser'));
+    }
+
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request, $username): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = $request->user();
+        $isCurrentUser = Auth::check() && Auth::user()->username === $username;
+        return view('profile.edit', compact('user', 'isCurrentUser'));
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $request->validate([
+            'about' => [
+                'nullable',
+                'string', 
+                'max:2000'
+            ],
+            'profile_picture' => [
+                'nullable', 
+                'image', 
+                'mimes:jpg,jpeg,png', 
+                'max:2048'
+            ]]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Sanitize about input
+        $about = strip_tags($request->about) ?? '';
+        
+        $user = $request->user();
+
+        if ($request->hasFile('profile_picture')) {
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path;
         }
 
-        $request->user()->save();
+        $user->about = $about;
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user->save();
+
+        return Redirect::route('profile', $user->username)->with('status', 'Profile updated successfully!');
     }
 
     /**

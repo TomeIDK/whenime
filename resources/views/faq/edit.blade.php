@@ -1,10 +1,8 @@
-@extends('layouts.guest')
+@extends('layouts.no-header')
 
 @section('title', 'FAQ')
 
-@section('header')
-    @include('components.menu')
-@endsection
+
 
 
 @section('content')

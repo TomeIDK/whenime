@@ -1,10 +1,8 @@
-@extends('layouts.guest')
+@extends('layouts.base')
 
 @section('title', 'Whenime')
 
-@section('header')
-    @include('components.menu')
-@endsection
+
 
 
 @section('content')

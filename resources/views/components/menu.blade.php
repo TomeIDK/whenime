@@ -84,7 +84,7 @@
                                                 <circle cx="12" cy="10" r="3" />
                                                 <circle cx="12" cy="12" r="10" />
                                             </svg>
-                                            <a class="justify-between mb-1">
+                                            <a href="{{ route('profile', Auth::user()->username) }}" class="justify-between mb-1">
                                                 Profile
                                             </a>
                                         </div>

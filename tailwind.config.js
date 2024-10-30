@@ -34,6 +34,7 @@ export default {
                     DEFAULT: "#10B981",
                     hover: "#059669",
                 },
+                warning: "#FFA500",
                 delete: {
                     DEFAULT: "#EF4444",
                     hover: "#DC2626",

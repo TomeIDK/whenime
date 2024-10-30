@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\FAQCategory;
 use App\Models\FAQQuestion;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+
 
 class FAQController extends Controller
 {
@@ -18,7 +21,8 @@ class FAQController extends Controller
         return view('faq.edit', compact('categories', 'category'));
     }
 
-    public function update(Request $request, FAQCategory $category){
+    public function update(Request $request, FAQCategory $category): RedirectResponse
+    {
         // Validate request
         $request->validate([
             "category_name" => "required", "string", "max:255",
@@ -39,7 +43,7 @@ class FAQController extends Controller
             }
         }
 
-        return redirect()->route('faq')->with('success', 'FAQ updated successfully!');
+        return Redirect::route('faq')->with('success', 'FAQ updated successfully!');
 
     }
 
