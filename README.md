@@ -69,15 +69,15 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ### Inhoud
 - [x] Maak een website met Laravel (minstens versie 11)
-- [ ] Zorg voor dynamisch gegevens ophalen en wegschrijven naar een database
+- [x] Zorg voor dynamisch gegevens ophalen en wegschrijven naar een database
 - [x] Vermijd het copy/pasten van een complete online tutorial
 - [x] Gebruik online informatiebronnen als:
   - [x] Je de code begrijpt en kan uitleggen
   - [x] Correcte bronvermelding toevoegt voor gebruikte code
-- [ ] Kies zelf het onderwerp van je project (bijv. zaak van familielid, sportclub, muziekfestival)
+- [x] Kies zelf het onderwerp van je project (bijv. zaak van familielid, sportclub, muziekfestival)
 
 ### Functionele minimum requirements
-- [ ] Informatieve data-driven website met de volgende features:
+- [x] Informatieve data-driven website met de volgende features:
 
 #### Login systeem
 - [x] Bezoekers kunnen inloggen
@@ -124,8 +124,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 #### Views
 - [ ] Gebruik minstens twee layouts
-- [ ] Gebruik componenten waar passend
-- [ ] Gebruik cursus- en oefeningstechnieken
+- [x] Gebruik componenten waar passend
+- [x] Gebruik cursus- en oefeningstechnieken
 
 #### Control structures
 - [ ] XSS protection
@@ -160,7 +160,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [x] Voeg één default admin toe (gebruikersnaam: admin, email: admin@ehb.be, wachtwoord: Password!321)
 
 #### Layout
-- [ ] Zorg voor een duidelijke en professionele layout
+- [x] Zorg voor een duidelijke en professionele layout
 
 #### GIT
 - [x] Gebruik een GitHub repo voor het project
