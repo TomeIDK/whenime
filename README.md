@@ -123,7 +123,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ### Technische requirements
 
 #### Views
-- [ ] Gebruik minstens twee layouts
+- [x] Gebruik minstens twee layouts
 - [x] Gebruik componenten waar passend
 - [x] Gebruik cursus- en oefeningstechnieken
 
