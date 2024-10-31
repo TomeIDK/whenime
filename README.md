@@ -97,7 +97,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 #### Laatste nieuwtjes
 - [ ] Admins kunnen nieuwsitems toevoegen, wijzigen en verwijderen
-- [ ] Bezoekers kunnen alle nieuwtjes en een detail per nieuwtje bekijken
+- [x] Bezoekers kunnen alle nieuwtjes en een detail per nieuwtje bekijken
 - [x] Nieuwsitems bevatten:
   - [x] Titel
   - [x] Afbeelding (opgeslagen op de server)
