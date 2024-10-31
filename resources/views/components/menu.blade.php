@@ -11,7 +11,7 @@
                         {{-- Links --}}
                         <ul class="menu menu-horizontal px-1">
                             <li><x-nav-link route="{{ route('home') }}" text="Home" /></li>
-                            <li><x-nav-link route="{{ route('news') }}" text="News" /></li>
+                            <li><x-nav-link route="{{ route('news.latest') }}" text="News" /></li>
                             <li><x-nav-link route="{{ route('faq') }}" text="FAQ" /></li>
                             <li><x-nav-link route="{{ route('contact') }}" text="Contact" /></li>
                         </ul>

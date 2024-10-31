@@ -2,19 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .btn-tertiary {
     @apply border-none shadow-none bg-background hover:bg-background hover:border-none hover:text-primary-hover-dark;
 }
 
 .nav-link {
-    @apply hover:text-primary-hover-dark
+    @apply hover:text-primary-hover-dark;
 }
 
 .hero-gradient {
-    background: linear-gradient(135deg, #4A90E2 0%, #A3D5FF 50%, #FFB7C5 100%);
+    background: linear-gradient(135deg, #4a90e2 0%, #a3d5ff 50%, #ffb7c5 100%);
 }
 
 .custom-link {
-    @apply text-text underline hover:text-primary-hover-dark
+    @apply text-text underline hover:text-primary-hover-dark;
 }
