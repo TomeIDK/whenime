@@ -19,4 +19,8 @@ class Schedule extends Model
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function scheduleItems() {
+        return $this->hasMany(ScheduleItem::class, 'schedule_id');
+    }
 }
