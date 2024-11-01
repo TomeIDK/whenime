@@ -39,7 +39,7 @@
                             {{-- Links --}}
                             <ul class="menu menu-horizontal px-1 gap-2">
                                 <li>
-                                    <a class="btn btn-sm border-none btn-ghost">
+                                    <a href="{{ route('my-schedules') }}" class="btn btn-sm border-none btn-ghost">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 24 22" fill="none" stroke="#000000" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="bevel" class="h-4 w-4 opacity-70">
@@ -49,7 +49,7 @@
                                             <line x1="8" y1="2" x2="8" y2="6"></line>
                                             <line x1="3" y1="10" x2="21" y2="10"></line>
                                         </svg>
-                                        My Schedule
+                                        My Schedules
                                     </a>
                                 </li>
                                 <li>

@@ -12,6 +12,12 @@
                         src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('storage/profile_pictures/default-profile-picture.jpg') }}" />
                 </div>
             </div>
+            @auth
+                @if ($isCurrentUser)
+                    <x-cta-nav-link route="{{ route('profile.edit', $user->username) }}" class="w-full self-center mt-3"
+                        text="Edit Profile" />
+                @endif
+            @endauth
             <div class="flex justify-between text-discard">
                 @if ($user->date_of_birth)
                     <div class="flex items-center gap-1">
@@ -37,12 +43,11 @@
                     </p>
                 </div>
             </div>
-
-            @auth
-                @if ($isCurrentUser)
-                    <x-cta-nav-link route="{{ route('profile.edit', $user->username) }}" class="w-full self-center mt-3" text="Edit Profile" />
-                @endif
-            @endauth
+            <h3 class="text-xl font-bold">Schedules</h3>
+            @foreach ($user->schedules as $schedule)
+                <p class="w-fit text-discard ml-4 hover:underline hover:text-primary hover:cursor-pointer">{{ $schedule->name }}
+                </p>
+            @endforeach
         </div>
 
         <div class="flex flex-col w-1/2 gap-2">

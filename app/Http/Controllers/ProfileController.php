@@ -15,7 +15,7 @@ class ProfileController extends Controller
 {
     // Show user's profile
     public function show($username){
-        $user = User::where('username', $username)->firstOrFail();
+        $user = User::with('schedules')->where('username', $username)->firstOrFail();
 
         $isCurrentUser = Auth::check() && Auth::user()->username === $username;
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MySchedulesController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\OwnerOrAdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -23,8 +24,7 @@ Route::get('/news', function () {
 // FAQ
 Route::get('/faq',  [FAQController::class, 'index'])->name('faq');
 
-
-// Contact Routes
+// Contact 
 Route::get('/contact', [ContactFormController::class, 'create'])
     ->name('contact');
 
@@ -32,22 +32,37 @@ Route::post('/contact', [ContactFormController::class, 'store'])
     ->middleware('throttle:5,10')
     ->name('contact.store');
 
-// Profile Routes
+// Profile 
 Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile');
 
-// Only allow access if user is owner or an admin
-Route::middleware(['auth', OwnerOrAdminMiddleware::class])->group(function () {
-    
+Route::middleware(['auth', OwnerOrAdminMiddleware::class])->group(function () { // Only allow access if user is owner or an admin
+    // Profile
     Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])
     ->name('profile.edit');
     Route::patch('/profile/{username}', [ProfileController::class, 'update'])
     ->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 // News 
 Route::get('/news/latest', [NewsController::class, 'index'])->name('news.latest');
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
+
+// My schedules
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-schedules', [MySchedulesController::class, 'index'])
+    ->name('my-schedules');
+    Route::get('/my-schedules/{scheduleName}', [MySchedulesController::class, 'edit'])
+    ->name('my-schedules.edit');
+    Route::patch('/my-schedules/{scheduleName}', [MySchedulesController::class, 'update'])
+    ->name('my-schedules.update');
+    Route::delete('/my-schedules/delete/{id}', [MySchedulesController::class, 'destroy'])
+    ->name('my-schedules.destroy');
+    Route::post('/my-schedules/store', [MySchedulesController::class, 'store'])
+    ->name('my-schedules.store');
+});
+
 
 // Admin Only Routes
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
@@ -61,7 +76,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
     Route::patch('/news/{id}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
-
 });
 
 require __DIR__.'/auth.php';
