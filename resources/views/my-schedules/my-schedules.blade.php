@@ -31,7 +31,7 @@
                                 </svg>
                             @endif
                         </div>
-                        <small>15 anime</small>
+                        <small>{{ $schedule->schedule_items_count }} anime</small>
                         <div class="card-actions justify-between mt-4">
                             <x-cta-nav-link route="{{ route('my-schedules.edit', $schedule->name) }}"
                                 class="btn-sm self-start flex flex-col items-center gap-1"

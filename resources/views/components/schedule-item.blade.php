@@ -1,3 +1,5 @@
-<div>
-    <!-- Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less. - Marie Curie -->
+<div class="flex items-center gap-1 ml-2">
+    <img src="{{ asset('images/streaming_services/' . strtolower(str_replace('+', '', $service)) . '-logo.png') }}"
+    class="w-4">
+    <p>{{ $name }}</p>
 </div>

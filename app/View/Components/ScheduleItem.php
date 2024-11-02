@@ -8,12 +8,15 @@ use Illuminate\View\Component;
 
 class ScheduleItem extends Component
 {
+    public $name;
+    public $service;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($name, $service)
     {
-        //
+        $this->name = $name;
+        $this->service = $service;
     }
 
     /**

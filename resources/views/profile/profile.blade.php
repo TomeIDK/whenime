@@ -45,8 +45,15 @@
             </div>
             <h3 class="text-xl font-bold">Schedules</h3>
             @foreach ($user->schedules as $schedule)
-                <p class="w-fit text-discard ml-4 hover:underline hover:text-primary hover:cursor-pointer">{{ $schedule->name }}
+                @if ($schedule->name === $firstPublicSchedule->name)
+                    <p class="w-fit ml-4 underline text-primary hover:cursor-pointer">
+                        {{ $schedule->name }}
+                    </p>
+                @else
+                <p class="w-fit text-discard ml-4 hover:underline hover:text-primary hover:cursor-pointer">
+                    {{ $schedule->name }}
                 </p>
+                @endif
             @endforeach
         </div>
 
@@ -55,6 +62,36 @@
                 {{ $user->username . (strtolower(substr($user->username, strlen($user->username) - 1)) == 's' ? "'" : "'s") }}
                 Profile</h1>
             <p>{{ $user->about ? $user->about : 'No information given' }}</p>
+
+            {{-- Schedule --}}
+            @if ($firstPublicSchedule)
+
+                <div>
+                    @foreach ($uniqueDays as $day)
+                        <div class="collapse collapse-plus">
+                            <input type="checkbox" name="my-accordion-{{ $day }}" checked />
+                            <div class="collapse-title text-xl font-medium border-b">{{ $day }}</div>
+                            <div class="collapse-content mt-3 flex flex-col gap-3">
+                                @if (isset($groupedItems[$day]))
+                                    @foreach ($groupedItems[$day] as $time => $items)
+                                        <div class="flex flex-col gap-2">
+                                            <p class="text-discard underline font-bold">{{ date('H:i', strtotime($time)) }}
+                                            </p>
+                                            @foreach ($items as $item)
+                                                <x-schedule-item name="{{ $item->name }}"
+                                                    service="{{ $item->service }}" />
+                                            @endforeach
+                                        </div>
+                                    @endforeach
+                                @endif
+
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
         </div>
+
     </div>
 @endsection

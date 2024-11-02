@@ -17,3 +17,19 @@
 .custom-link {
     @apply text-text underline hover:text-primary-hover-dark;
 }
+
+.grid-rows-48 {
+    grid-template-rows: repeat(48, minmax(0, 1fr));
+}
+
+.border-t-dotted {
+    border-top-style: dotted;
+}
+
+.slot-flex-basis {
+    flex-basis: 5px;
+}
+
+
+
+

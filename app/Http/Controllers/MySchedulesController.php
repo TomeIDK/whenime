@@ -15,6 +15,10 @@ class MySchedulesController extends Controller
 {
     public function index() {
         $user = User::with('schedules')->find(Auth::id());
+
+        foreach ($user->schedules as $schedule) {
+            $schedule->schedule_items_count = $schedule->scheduleItems->count();
+        }
         return view('my-schedules.my-schedules', compact('user'));
     }
 
@@ -47,9 +51,42 @@ class MySchedulesController extends Controller
         if ($ownershipCheck instanceof \Illuminate\Http\RedirectResponse) {
             return $ownershipCheck; 
         }
-
         $schedule = $ownershipCheck;
-        return view('my-schedules.edit', compact('schedule'));
+
+        $dayOrder = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday',
+        ];
+
+        $serviceOrder = [
+        'Netflix',
+        'Crunchyroll',
+        'Funimation',
+        'Disney+',
+        'HIDIVE',
+        'Other',
+        ];
+
+        // Sort days and services in a custom order
+        $uniqueDays = $schedule->scheduleItems->pluck('day')->unique()->sortBy(function($day) use ($dayOrder) {
+            return array_search($day, $dayOrder);
+        });
+
+        $uniqueServices = $schedule->scheduleItems->pluck('service')->unique()->sortBy(function($service) use ($serviceOrder) {
+            return array_search($service, $serviceOrder);
+        });
+
+        // Group items with the same day and time slot
+        $groupedItems = [];
+        foreach ($schedule->scheduleItems as $item) {
+            $groupedItems[$item->day][$item->time][] = $item;
+        }
+        return view('my-schedules.edit', compact('schedule', 'uniqueDays', 'uniqueServices', 'groupedItems'));
     }
 
     public function update() {
@@ -75,7 +112,7 @@ class MySchedulesController extends Controller
     private function checkOwnershipByScheduleName($scheduleName) {
         $user = Auth::user();
 
-        $schedule = Schedule::where('user_id', $user->id)->where('name', $scheduleName)->first();
+        $schedule = Schedule::with('scheduleItems')->where('user_id', $user->id)->where('name', $scheduleName)->first();
 
         if($user->is_admin) {
             return $schedule;

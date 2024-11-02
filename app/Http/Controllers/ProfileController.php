@@ -15,13 +15,42 @@ class ProfileController extends Controller
 {
     // Show user's profile
     public function show($username){
-        $user = User::with('schedules')->where('username', $username)->firstOrFail();
+        $user = User::with(['schedules' => function ($query) {
+            $query->where('is_public', true);
+        }])->where('username', $username)->firstOrFail();
 
         $isCurrentUser = Auth::check() && Auth::user()->username === $username;
 
-        return view('profile.profile', compact('user', 'isCurrentUser'));
-    }
+        $firstPublicSchedule = $user->schedules->first();
 
+        $dayOrder = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday',
+        ];
+
+        if ($firstPublicSchedule) {
+            // Sort days and services in a custom order
+            $uniqueDays = $firstPublicSchedule->scheduleItems->pluck('day')->unique()->sortBy(function($day) use ($dayOrder) {
+                return array_search($day, $dayOrder);
+            });
+
+                // Group items with the same day and time slot
+            $groupedItems = [];
+            foreach ($firstPublicSchedule->scheduleItems as $item) {
+                $groupedItems[$item->day][$item->time][] = $item;
+            }
+            return view('profile.profile', compact('user', 'isCurrentUser', 'firstPublicSchedule', 'uniqueDays', 'groupedItems'));
+
+        }
+
+
+        return view('profile.profile', compact('user', 'isCurrentUser', 'firstPublicSchedule'));
+    }
     /**
      * Display the user's profile form.
      */
