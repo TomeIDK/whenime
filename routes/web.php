@@ -5,6 +5,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MySchedulesController;
+use App\Http\Controllers\ScheduleItemController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\OwnerOrAdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,12 @@ Route::middleware(['auth'])->group(function () {
     ->name('my-schedules.destroy');
     Route::post('/my-schedules/store', [MySchedulesController::class, 'store'])
     ->name('my-schedules.store');
+    Route::post('/schedule-item/{scheduleName}/add', [ScheduleItemController::class, 'store'])
+    ->name('schedule-item.store');
+    Route::patch('/schedule-item/{id}', [ScheduleItemController::class, 'update'])
+    ->name('schedule-item.update');
+    Route::delete('/schedule-item/delete/{id}', [ScheduleItemController::class, 'destroy'])
+    ->name('schedule-item.destroy');
 });
 
 

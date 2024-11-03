@@ -105,7 +105,6 @@ class MySchedulesController extends Controller
         $schedule->delete();
 
         return Redirect::route('my-schedules')->with('success', 'Schedule deleted successfully!');
-
     }
 
     // Checks if user owns the schedule or is an admin
