@@ -144,7 +144,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 #### Models
 - [ ] Gebruik Eloquent models per entiteit
 - [ ] Maak gebruik van relaties:
-  - [ ] Minstens één one-to-many relatie
+  - [x] Minstens één one-to-many relatie
   - [ ] Minstens één many-to-many relatie
 
 #### Database
