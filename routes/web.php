@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\NewsController;
@@ -35,7 +36,7 @@ Route::post('/contact', [ContactFormController::class, 'store'])
 
 // Profile 
 Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile');
-Route::get('/profile/{username}/{scheduleName}', [ProfileController::class, 'showSchedule'])->name('profile-schedule.show');
+Route::get('/profile/{username}/schedules/{scheduleName}', [ProfileController::class, 'showSchedule'])->name('profile-schedule.show');
 
 Route::middleware(['auth', OwnerOrAdminMiddleware::class])->group(function () { // Only allow access if user is owner or an admin
     // Profile
@@ -84,6 +85,10 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
     Route::patch('/news/{id}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+});
+
+Route::middleware([AdminMiddleware::class])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
 });
 
 require __DIR__.'/auth.php';
