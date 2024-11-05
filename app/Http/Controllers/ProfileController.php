@@ -21,7 +21,7 @@ class ProfileController extends Controller
 
         $isCurrentUser = Auth::check() && Auth::user()->username === $username;
 
-        $firstPublicSchedule = $user->schedules->first();
+        $currentSchedule = $user->schedules->first();
 
         $dayOrder = [
             'Monday',
@@ -33,23 +33,59 @@ class ProfileController extends Controller
             'Sunday',
         ];
 
-        if ($firstPublicSchedule) {
+        if ($currentSchedule) {
             // Sort days and services in a custom order
-            $uniqueDays = $firstPublicSchedule->scheduleItems->pluck('day')->unique()->sortBy(function($day) use ($dayOrder) {
+            $uniqueDays = $currentSchedule->scheduleItems->pluck('day')->unique()->sortBy(function($day) use ($dayOrder) {
                 return array_search($day, $dayOrder);
             });
 
                 // Group items with the same day and time slot
             $groupedItems = [];
-            foreach ($firstPublicSchedule->scheduleItems as $item) {
+            foreach ($currentSchedule->scheduleItems as $item) {
                 $groupedItems[$item->day][$item->time][] = $item;
             }
-            return view('profile.profile', compact('user', 'isCurrentUser', 'firstPublicSchedule', 'uniqueDays', 'groupedItems'));
+            return view('profile.profile', compact('user', 'isCurrentUser', 'currentSchedule', 'uniqueDays', 'groupedItems'));
 
         }
 
 
-        return view('profile.profile', compact('user', 'isCurrentUser', 'firstPublicSchedule'));
+        return view('profile.profile', compact('user', 'isCurrentUser', 'currentSchedule'));
+    }
+
+    public function showSchedule($username, $scheduleName) {
+        $user = User::with(['schedules' => function ($query) {
+            $query->where('is_public', true);
+        }])->where('username', $username)->firstOrFail();
+
+        $isCurrentUser = Auth::check() && Auth::user()->username === $username;
+
+        $currentSchedule = $user->schedules->firstWhere('name', $scheduleName);
+
+        $dayOrder = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday',
+        ];
+
+        if ($currentSchedule) {
+            // Sort days and services in a custom order
+            $uniqueDays = $currentSchedule->scheduleItems->pluck('day')->unique()->sortBy(function($day) use ($dayOrder) {
+                return array_search($day, $dayOrder);
+            });
+
+            // Group items with the same day and time slot
+            $groupedItems = [];
+            foreach ($currentSchedule->scheduleItems as $item) {
+                $groupedItems[$item->day][$item->time][] = $item;
+            }
+            return view('profile.profile', compact('user', 'isCurrentUser', 'currentSchedule', 'uniqueDays', 'groupedItems'));
+        }
+
+        return $this->show($username);
     }
     /**
      * Display the user's profile form.

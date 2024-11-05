@@ -35,6 +35,7 @@ Route::post('/contact', [ContactFormController::class, 'store'])
 
 // Profile 
 Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile');
+Route::get('/profile/{username}/{scheduleName}', [ProfileController::class, 'showSchedule'])->name('profile-schedule.show');
 
 Route::middleware(['auth', OwnerOrAdminMiddleware::class])->group(function () { // Only allow access if user is owner or an admin
     // Profile

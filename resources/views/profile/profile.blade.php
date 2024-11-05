@@ -13,7 +13,7 @@
                 </div>
             </div>
             @auth
-                @if ($isCurrentUser)
+                @if ($isCurrentUser || Auth::user()->is_admin)
                     <x-cta-nav-link route="{{ route('profile.edit', $user->username) }}" class="w-full self-center mt-3"
                         text="Edit Profile" />
                 @endif
@@ -43,18 +43,20 @@
                     </p>
                 </div>
             </div>
-            <h3 class="text-xl font-bold">Schedules</h3>
-            @foreach ($user->schedules as $schedule)
-                @if ($schedule->name === $firstPublicSchedule->name)
-                    <p class="w-fit ml-4 underline text-primary hover:cursor-pointer">
-                        {{ $schedule->name }}
-                    </p>
-                @else
-                <p class="w-fit text-discard ml-4 hover:underline hover:text-primary hover:cursor-pointer">
-                    {{ $schedule->name }}
-                </p>
-                @endif
-            @endforeach
+            @if ($user->schedules)
+                <h3 class="text-xl font-bold">Schedules</h3>
+                @foreach ($user->schedules as $schedule)
+                    @if ($schedule->name === $currentSchedule->name)
+                        <p class="w-fit ml-4 underline text-primary hover:cursor-pointer">
+                            {{ $schedule->name }}
+                        </p>
+                    @else
+                        <a href="{{ route('profile-schedule.show',['username' => $user->username, 'scheduleName' => $schedule->name]) }}" class="w-fit text-discard ml-4 hover:underline hover:text-primary hover:cursor-pointer">
+                            {{ $schedule->name }}
+                        </a>
+                    @endif
+                @endforeach
+            @endif
         </div>
 
         <div class="flex flex-col w-1/2 gap-2">
@@ -64,7 +66,7 @@
             <p>{{ $user->about ? $user->about : 'No information given' }}</p>
 
             {{-- Schedule --}}
-            @if ($firstPublicSchedule)
+            @if ($currentSchedule)
 
                 <div>
                     @foreach ($uniqueDays as $day)
