@@ -83,8 +83,8 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 - [x] Bezoekers kunnen inloggen
 - [x] Bezoekers kunnen een nieuwe account aanmaken
 - [x] Useraccount kan gewone gebruiker of admin zijn
-- [ ] Enkel admins kunnen andere gebruikers verheffen tot admin en deze rechten afnemen
-- [ ] Enkel admins kunnen manueel een nieuwe gebruiker aanmaken
+- [x] Enkel admins kunnen andere gebruikers verheffen tot admin en deze rechten afnemen
+- [x] Enkel admins kunnen manueel een nieuwe gebruiker aanmaken
 
 #### Profielpagina
 - [x] Elke gebruiker heeft een publieke profielpagina toegankelijk voor iedereen
