@@ -15,19 +15,15 @@
 }
 
 .custom-link {
-    @apply text-text underline hover:text-primary-hover-dark;
+    @apply underline text-text hover:text-primary-hover-dark;
 }
 
-.grid-rows-48 {
-    grid-template-rows: repeat(48, minmax(0, 1fr));
+.admin-nav-link {
+    @apply p-1 my-2 cursor-pointer mx-11 hover:text-primary
 }
 
-.border-t-dotted {
-    border-top-style: dotted;
-}
-
-.slot-flex-basis {
-    flex-basis: 5px;
+.admin-nav-link-title {
+    @apply mt-2 text-sm cursor-default text-discard
 }
 
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\NewsController;
@@ -85,10 +86,16 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
     Route::patch('/news/{id}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
-});
 
-Route::middleware([AdminMiddleware::class])->group(function () {
+    // Admin
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
+
+    // Manage Users
+    Route::get('/admin/users', [AdminUsersController::class, 'index'])->name('admin-users');
+    Route::post('/admin/users', [AdminUsersController::class, 'store'])->name('admin-users.store');
+    Route::patch('/admin/users/{user}/toggle-admin', [AdminUsersController::class, 'toggleAdmin'])->name('admin-users.toggleAdmin');
+    Route::delete('/admin/users/delete/{id}', [AdminUsersController::class, 'destroy'])->name('admin-users.destroy');
+
 });
 
 require __DIR__.'/auth.php';

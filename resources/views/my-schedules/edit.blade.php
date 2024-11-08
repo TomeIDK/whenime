@@ -4,11 +4,11 @@
 
 @section('content')
     <div class="p-4">
-        <h1 class="text-6xl font-bold my-16 text-center">{{ $schedule->name }}</h1>
+        <h1 class="my-16 text-6xl font-bold text-center">{{ $schedule->name }}</h1>
 
-        <div class="flex flex-col mb-4 w-1/2 m-auto gap-4">
+        <div class="flex flex-col w-1/2 gap-4 m-auto mb-4">
             <div class="self-end">
-                <button class="btn border-none bg-primary text-white hover:bg-primary-hover-dark btn-sm font-bold"
+                <button class="font-bold text-white border-none btn bg-primary hover:bg-primary-hover-dark btn-sm"
                     onclick="create_schedule_item.showModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 22" fill="none"
                         stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="bevel">
@@ -16,14 +16,14 @@
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg> Add Anime</button>
             </div>
-            <div class="flex space-x-4 mb-4">
-                <select class="select select-bordered w-full">
+            <div class="flex mb-4 space-x-4">
+                <select class="w-full select select-bordered">
                     <option value="">All Days</option>
                     @foreach ($uniqueDays as $day)
                         <option value="{{ $day }}">{{ $day }}</option>
                     @endforeach
                 </select>
-                <select class="select select-bordered w-full">
+                <select class="w-full select select-bordered">
                     <option value="">All Platforms</option>
                     @foreach ($uniqueServices as $service)
                         <option value="{{ $service }}">{{ $service }}</option>
@@ -35,12 +35,12 @@
             @foreach ($uniqueDays as $day)
                 <div class="collapse collapse-plus">
                     <input type="checkbox" name="my-accordion-{{ $day }}" checked />
-                    <div class="collapse-title text-xl font-medium border-b">{{ $day }}</div>
-                    <div class="collapse-content mt-3 flex flex-col gap-3">
+                    <div class="text-xl font-medium border-b collapse-title">{{ $day }}</div>
+                    <div class="flex flex-col gap-3 mt-3 collapse-content">
                         @if (isset($groupedItems[$day]))
                             @foreach ($groupedItems[$day] as $time => $items)
                                 <div class="flex flex-col gap-2">
-                                    <p class="text-discard underline font-bold">{{ date('H:i', strtotime($time)) }}
+                                    <p class="font-bold underline text-discard">{{ date('H:i', strtotime($time)) }}
                                     </p>
                                     @foreach ($items as $item)
                                         <div class="flex justify-between hover:underline">
@@ -49,7 +49,7 @@
                                             <div class="flex gap-1">
                                                 {{-- Update Item --}}
                                                 <button
-                                                    class="btn btn-sm border-none hover:bg-primary bg-transparent shadow-none flex flex-col items-center gap-1"
+                                                    class="flex flex-col items-center gap-1 bg-transparent border-none shadow-none btn btn-sm hover:bg-primary"
                                                     onclick="showUpdateModal({{ $item->id }}, '{{ $item->name }}', '{{ $item->day }}', '{{ $item->time }}', '{{ $item->service }}')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
@@ -59,7 +59,7 @@
                                                 </button>
                                                 {{-- Delete Item --}}
                                                 <button
-                                                    class="btn btn-sm border-none hover:bg-delete-hover bg-transparent shadow-none flex flex-col items-center gap-1"
+                                                    class="flex flex-col items-center gap-1 bg-transparent border-none shadow-none btn btn-sm hover:bg-delete-hover"
                                                     onclick="showDeleteModal({{ $item->id }})">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
@@ -86,13 +86,13 @@
             @endforeach
         </div>
         <!-- Create Schedule Item Modal -->
-        <dialog id="create_schedule_item" class="modal modal-bottom sm:modal-middle text-center">
+        <dialog id="create_schedule_item" class="text-center modal modal-bottom sm:modal-middle">
             <div class="modal-box">
                 <form method="dialog">
-                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
                 </form>
                 <h3 class="text-2xl font-bold">Add anime to<br>{{ $schedule->name }}</h3>
-                <div class="modal-action flex gap-4 justify-center mt-2">
+                <div class="flex justify-center gap-4 mt-2 modal-action">
 
                     {{-- Create Schedule Item --}}
                     <form method="POST" action="{{ route('schedule-item.store', $schedule->name) }}"
@@ -102,18 +102,18 @@
                             <div class="label">
                                 <span class="label-text">I will be watching</span>
                             </div>
-                            <label class="input input-bordered flex items-center gap-2">
-                                <input type="text" name="name" class="grow border-none focus:ring-transparent"
+                            <label class="flex items-center gap-2 input input-bordered">
+                                <input type="text" name="name" class="border-none grow focus:ring-transparent"
                                     placeholder="Anime" :value="old('name')" required autofocus />
                             </label>
                             @error('name')
-                                <span class="text-red-500 mt-2 label-text-alt">{{ $message }}</span>
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
                             @enderror
 
                             <div class="label">
                                 <span class="label-text">which airs on</span>
                             </div>
-                            <select class="select select-bordered w-full" name="day" required>
+                            <select class="w-full select select-bordered" name="day" required>
                                 <option value="" disabled selected>Select a day</option>
                                 <option value="Monday" {{ old('day') === 'Monday' ? 'selected' : '' }}>Monday</option>
                                 <option value="Tuesday" {{ old('day') === 'Tuesday' ? 'selected' : '' }}>Tuesday
@@ -128,24 +128,24 @@
                                 <option value="Sunday" {{ old('day') === 'Sunday' ? 'selected' : '' }}>Sunday</option>
                             </select>
                             @error('day')
-                                <span class="text-red-500 mt-2 label-text-alt">{{ $message }}</span>
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
                             @enderror
 
                             <div class="label">
                                 <span class="label-text">at</span>
                             </div>
-                            <label class="input input-bordered flex items-center gap-2">
-                                <input type="time" name="time" class="grow border-none focus:ring-transparent"
+                            <label class="flex items-center gap-2 input input-bordered">
+                                <input type="time" name="time" class="border-none grow focus:ring-transparent"
                                     :value="old('time')" required />
                             </label>
                             @error('time')
-                                <span class="text-red-500 mt-2 label-text-alt">{{ $message }}</span>
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
                             @enderror
 
                             <div class="label">
                                 <span class="label-text">on</span>
                             </div>
-                            <select class="select select-bordered w-full" name="service" required>
+                            <select class="w-full select select-bordered" name="service" required>
                                 <option value="" disabled selected>Select a streaming service</option>
                                 <option value="Netflix" {{ old('service') === 'Netflix' ? 'selected' : '' }}>Netflix
                                 </option>
@@ -159,12 +159,12 @@
                                 <option value="Other" {{ old('service') === 'Other' ? 'selected' : '' }}>Other</option>
                             </select>
                             @error('service')
-                                <span class="text-red-500 mt-2 label-text-alt">{{ $message }}</span>
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <button type="submit"
-                            class="btn btn-sm border-none bg-success hover:bg-success-hover text-white outline-none">Add
+                            class="text-white border-none outline-none btn btn-sm bg-success hover:bg-success-hover">Add
                             anime</button>
                     </form>
                 </div>
@@ -172,13 +172,13 @@
         </dialog>
 
         <!-- Update Schedule Item Modal -->
-        <dialog id="update_schedule_item" class="modal modal-bottom sm:modal-middle text-center">
+        <dialog id="update_schedule_item" class="text-center modal modal-bottom sm:modal-middle">
             <div class="modal-box">
                 <form method="dialog">
-                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
                 </form>
                 <h3 class="text-2xl font-bold">Edit Anime</h3>
-                <div class="modal-action flex gap-4 justify-center mt-2">
+                <div class="flex justify-center gap-4 mt-2 modal-action">
                     {{-- Update Schedule Item --}}
                     <form method="POST" action="{{ route('schedule-item.update', ':id') }}" id="update_form"
                         class="flex flex-col gap-6">
@@ -188,15 +188,15 @@
                             <div class="label">
                                 <span class="label-text">Name</span>
                             </div>
-                            <label class="input input-bordered flex items-center gap-2">
-                                <input type="text" name="name" class="grow border-none focus:ring-transparent"
+                            <label class="flex items-center gap-2 input input-bordered">
+                                <input type="text" name="name" class="border-none grow focus:ring-transparent"
                                     placeholder="Anime" required autofocus />
                             </label>
 
                             <div class="label">
                                 <span class="label-text">Day</span>
                             </div>
-                            <select class="select select-bordered w-full" name="day" required>
+                            <select class="w-full select select-bordered" name="day" required>
                                 <option value="" disabled selected>Select a day</option>
                                 <option value="Monday">Monday</option>
                                 <option value="Tuesday">Tuesday</option>
@@ -210,15 +210,15 @@
                             <div class="label">
                                 <span class="label-text">Time</span>
                             </div>
-                            <label class="input input-bordered flex items-center gap-2">
-                                <input type="time" name="time" class="grow border-none focus:ring-transparent"
+                            <label class="flex items-center gap-2 input input-bordered">
+                                <input type="time" name="time" class="border-none grow focus:ring-transparent"
                                     required />
                             </label>
 
                             <div class="label">
                                 <span class="label-text">Service</span>
                             </div>
-                            <select class="select select-bordered w-full" name="service" required>
+                            <select class="w-full select select-bordered" name="service" required>
                                 <option value="" disabled selected>Select a streaming service</option>
                                 <option value="Netflix">Netflix</option>
                                 <option value="HIDIVE">HIDIVE</option>
@@ -230,7 +230,7 @@
                         </div>
 
                         <button type="submit"
-                            class="btn btn-sm border-none bg-success hover:bg-success-hover text-white outline-none">Update
+                            class="text-white border-none outline-none btn btn-sm bg-success hover:bg-success-hover">Update
                             anime</button>
                     </form>
                 </div>
@@ -238,22 +238,22 @@
         </dialog>
 
         <!-- Delete Schedule Item Confirmation Modal -->
-        <dialog id="delete_schedule_item" class="modal modal-bottom sm:modal-middle text-center">
+        <dialog id="delete_schedule_item" class="text-center modal modal-bottom sm:modal-middle">
             <div class="modal-box">
                 <h3 class="text-lg font-bold text-balance">Are you sure you want to delete this anime from your schedule?
                 </h3>
-                <p class="text-discard underline">This action cannot be undone!</p>
-                <div class="modal-action flex gap-4 justify-center">
+                <p class="underline text-discard">This action cannot be undone!</p>
+                <div class="flex justify-center gap-4 modal-action">
                     {{-- Delete Schedule Item --}}
                     <form method="POST" action="{{ route('schedule-item.destroy', ':id') }}">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="btn btn-sm border-none bg-delete hover:bg-delete-hover text-white outline-none">Yes,
+                            class="text-white border-none outline-none btn btn-sm bg-delete hover:bg-delete-hover">Yes,
                             delete</button>
                     </form>
                     <form method="dialog">
-                        <button class="btn btn-sm border-none bg-discard text-white hover:bg-discard-hover">No,
+                        <button class="text-white border-none btn btn-sm bg-discard hover:bg-discard-hover">No,
                             don't
                             delete</button>
                     </form>
@@ -295,7 +295,6 @@
             // Show the modal
             const modal = document.getElementById('update_schedule_item');
             modal.showModal();
-            console.log('Schedule Item ID:', scheduleItemId);
         }
     </script>
 

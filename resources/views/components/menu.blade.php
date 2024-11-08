@@ -6,10 +6,10 @@
                 <div class="flex items-center">
                     {{-- Logo --}}
                     <a href="{{ route('home') }}"
-                        class="btn text-2xl border-none shadow-none bg-background hover:bg-background hover:text-primary hover:border-none">Whenime</a>
+                        class="text-2xl border-none shadow-none btn bg-background hover:bg-background hover:text-primary hover:border-none">Whenime</a>
                     <div class="flex-none">
                         {{-- Links --}}
-                        <ul class="menu menu-horizontal px-1">
+                        <ul class="px-1 menu menu-horizontal">
                             <li><x-nav-link route="{{ route('home') }}" text="Home" /></li>
                             <li><x-nav-link route="{{ route('news.latest') }}" text="News" /></li>
                             <li><x-nav-link route="{{ route('faq') }}" text="FAQ" /></li>
@@ -24,11 +24,11 @@
                     {{-- Guest Menu --}}
                     @guest
                         {{-- Login / Register --}}
-                        <ul class="menu menu-horizontal px-1 gap-2">
+                        <ul class="gap-2 px-1 menu menu-horizontal">
                             <li><a href="{{ route('login') }}" class="btn btn-sm btn-tertiary">Log
                                     In</a></li>
                             <li><a href="{{ route('register') }}"
-                                    class="btn btn-sm border-none shadow-none bg-primary text-white hover:bg-primary-hover-dark">Register</a>
+                                    class="text-white border-none shadow-none btn btn-sm bg-primary hover:bg-primary-hover-dark">Register</a>
                             </li>
                         </ul>
                     @endguest
@@ -37,12 +37,12 @@
                     @auth
                         <div class="flex items-center">
                             {{-- Links --}}
-                            <ul class="menu menu-horizontal px-1 gap-2">
+                            <ul class="gap-2 px-1 menu menu-horizontal">
                                 <li>
-                                    <a href="{{ route('my-schedules') }}" class="btn btn-sm border-none btn-ghost">
+                                    <a href="{{ route('my-schedules') }}" class="border-none btn btn-sm btn-ghost">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 24 22" fill="none" stroke="#000000" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="bevel" class="h-4 w-4 opacity-70">
+                                            stroke-linecap="round" stroke-linejoin="bevel" class="w-4 h-4 opacity-70">
                                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2">
                                             </rect>
                                             <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -53,7 +53,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <x-cta-nav-link route="{{ route('home') }}" class="btn-sm font-bold"
+                                    <x-cta-nav-link route="{{ route('home') }}" class="font-bold btn-sm"
                                         text='<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             viewBox="0 0 24 22" fill="none" stroke="#ffffff" stroke-width="3"
                                             stroke-linecap="round" stroke-linejoin="bevel">
@@ -74,7 +74,7 @@
                                 </div>
                                 <ul tabindex="0"
                                     class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                                    <li class="font-bold mb-2">{{ Auth::user()->username }}</li>
+                                    <li class="mb-2 font-bold">{{ Auth::user()->username }}</li>
                                     <li>
                                         <div class="flex items-center gap-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -115,7 +115,7 @@
                                                     </rect>
                                                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                                 </svg>
-                                                <a class="mb-1" />
+                                                <a href="{{ route('admin-dashboard') }}" class="mb-1" />
                                                 Admin Dashboard
                                                 </a>
                                             </div>
