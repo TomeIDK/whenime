@@ -96,7 +96,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
   - [x] "Over mij" tekst
 
 #### Laatste nieuwtjes
-- [ ] Admins kunnen nieuwsitems toevoegen, wijzigen en verwijderen
+- [x] Admins kunnen nieuwsitems toevoegen, wijzigen en verwijderen
 - [x] Bezoekers kunnen alle nieuwtjes en een detail per nieuwtje bekijken
 - [x] Nieuwsitems bevatten:
   - [x] Titel
@@ -106,7 +106,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 #### FAQ pagina
 - [x] FAQ-pagina bevat vragen en antwoorden, gegroepeerd per categorie
-- [ ] Admins kunnen categorieën en vraag/antwoorden toevoegen, wijzigen en verwijderen
+- [x] Admins kunnen categorieën en vraag/antwoorden toevoegen, wijzigen en verwijderen
 - [x] Bezoekers kunnen de FAQ zien
 
 #### Contact pagina
