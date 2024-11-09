@@ -99,8 +99,8 @@
                 <h4 class="admin-nav-link-title">Manage</h4>
             </li>
             <li><a href="{{ route('admin-users') }}" class="admin-nav-link">Users</a></li>
-            <li><a class="admin-nav-link">News</a></li>
-            <li><a class="admin-nav-link">FAQ</a></li>
+            <li><a href="{{ route('news.admin') }}" class="admin-nav-link">News</a></li>
+            <li><a href="{{ route('faq.admin') }}" class="admin-nav-link">FAQ</a></li>
             <li><a class="admin-nav-link">Contact Forms</a></li>
 
             <li class="px-8 py-2 w-fit">

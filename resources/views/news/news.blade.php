@@ -11,7 +11,7 @@
                 Open drawer
             </label>
             <x-news-item id="{{ $currentNews->id }}" title="{{ $currentNews->title }}"
-                src="{{ asset('storage/' . $currentNews->image) }}" content="{{ $currentNews->content }}"
+                src="{{ $currentNews->image }}" content="{{ $currentNews->content }}"
                 publishedDate="{{ $currentNews->created_at }}" />
         </div>
         <div class="border-t shadow-md drawer-side">

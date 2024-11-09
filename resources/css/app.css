@@ -26,6 +26,10 @@
     @apply mt-2 text-sm cursor-default text-discard
 }
 
+.collapse, .table {
+    overflow: visible !important;
+}
+
 
 
 

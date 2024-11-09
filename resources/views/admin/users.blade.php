@@ -29,6 +29,7 @@
                         <th>User</th>
                         <th>Email</th>
                         <th>Registered</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>

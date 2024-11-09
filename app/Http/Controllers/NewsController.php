@@ -15,11 +15,20 @@ class NewsController extends Controller
         return redirect()->route('news.show', ['id' => $latestNews->id]);
     }
 
+    public function indexAdmin(){
+        $news = News::latest()->paginate(25);
+        return view('admin.news', compact('news'));
+    }
+
     public function show($id){
         $currentNews = News::findOrFail($id);
         $newsItems = News::all('id', 'title');
 
         return view('news.news', compact('currentNews', 'newsItems'));
+    }
+
+    public function create(){
+        return view('admin.create-news');
     }
 
     public function edit($id){
@@ -55,13 +64,13 @@ class NewsController extends Controller
             $imagePath = $request->file('image')->store('news_images', 'public');
         }
 
-        News::create([
+        $news = News::create([
             'title' => $request->title,
             'content' => $request->content,
             'image' => $imagePath,
         ]);
 
-        return Redirect::route('news')->with('success', 'News item successfully created');
+        return Redirect::route('news.show', $news->id)->with('success', 'News item created successfully');
     }
 
     public function update(Request $request, $id){
@@ -102,7 +111,7 @@ class NewsController extends Controller
         $newsItem = News::findOrFail($id);
         $newsItem->delete();
 
-        return Redirect::route('news.latest')->with('success', 'News item deleted successfully!');
+        return Redirect::route('news.admin')->with('success', 'News item deleted successfully!');
 
     }
 }

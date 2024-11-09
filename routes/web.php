@@ -19,10 +19,6 @@ Route::get('/', function () {
     return view('home');
 })-> name("home");
 
-// News
-Route::get('/news', function () {
-    return view('news');
-})-> name("news");
 
 // FAQ
 Route::get('/faq',  [FAQController::class, 'index'])->name('faq');
@@ -50,6 +46,7 @@ Route::middleware(['auth', OwnerOrAdminMiddleware::class])->group(function () { 
 });
 
 // News 
+Route::get('/news', [NewsController::class, 'index'])-> name("news");
 Route::get('/news/latest', [NewsController::class, 'index'])->name('news.latest');
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
 
@@ -77,12 +74,19 @@ Route::middleware(['auth'])->group(function () {
 // Admin Only Routes
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     // FAQ
+    Route::get('/admin/faq',  [FAQController::class, 'indexAdmin'])->name('faq.admin');
     Route::get('/faq/edit/{category}', [FAQController::class, 'edit'])->name('faq.edit');
     Route::patch('/faq/update/{category}', [FAQController::class, 'update'])->name('faq.update');
-    Route::post('/faq/store', [FAQController::class, 'store'])->name('faq.store');
-    Route::delete('/faq/delete/{id}', [FAQController::class, 'destroy'])->name('faq.destroy');
+    Route::patch('/faq/update/question/{questionId}', [FAQController::class, 'updateQuestion'])->name('faq.updateQuestion');
+    Route::post('/faq/category/store', [FAQController::class, 'storeCategory'])->name('faq.storeCategory');
+    Route::post('/faq/question/store', [FAQController::class, 'storeQuestion'])->name('faq.storeQuestion');
+    Route::delete('/faq/category/delete/{id}', [FAQController::class, 'destroyCategory'])->name('faq.destroyCategory');
+    Route::delete('/faq/question/delete/{id}', [FAQController::class, 'destroyQuestion'])->name('faq.destroyQuestion');
 
     // News
+    Route::get('/admin/news', [NewsController::class, 'indexAdmin'])->name('news.admin');
+    Route::get('/admin/news/create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('/admin/news/store', [NewsController::class, 'store'])->name('news.store');
     Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
     Route::patch('/news/{id}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
@@ -90,12 +94,11 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     // Admin
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
 
-    // Manage Users
+    // Users
     Route::get('/admin/users', [AdminUsersController::class, 'index'])->name('admin-users');
     Route::post('/admin/users', [AdminUsersController::class, 'store'])->name('admin-users.store');
     Route::patch('/admin/users/{user}/toggle-admin', [AdminUsersController::class, 'toggleAdmin'])->name('admin-users.toggleAdmin');
     Route::delete('/admin/users/delete/{id}', [AdminUsersController::class, 'destroy'])->name('admin-users.destroy');
-
 });
 
 require __DIR__.'/auth.php';
