@@ -5,10 +5,10 @@
 </head>
 <body>
     <h1>Contact Form Submission</h1>
-    <p><strong>Name:</strong> {{ $name }}</p>
-    <p><strong>Email:</strong> {{ $email }}</p>
-    <p><strong>Subject:</strong> {{ $subject }}</p>
+    <p><strong>Name:</strong> {{ $contactForm->name }}</p>
+    <p><strong>Email:</strong> {{ $contactForm->email }}</p>
+    <p><strong>Subject:</strong> {{ $contactForm->subject }}</p>
     <p><strong>Message:</strong></p>
-    <p>{{ $contact_message }}</p>
+    <p>{{ $contactForm->message }}</p>
 </body>
 </html>

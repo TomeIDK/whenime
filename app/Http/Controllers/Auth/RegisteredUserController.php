@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,6 +30,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Honeypot: if email_confirm is filled in, it's likely a bot
+        if ($request->filled('email_confirm')) {
+            return Redirect::route('home')->with('error', 'Oops, something went wrong');
+        }
+
         $reservedWords = ['admin', 'user', 'support'];
         // Validate user input
         $request->validate([
