@@ -8,9 +8,41 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\ContactFormStatus;
 
 class ContactFormController extends Controller
 {
+    public function indexUnread() {
+        $forms = ContactForm::unread()->paginate(25);
+        $status = 'unread';
+        return view('admin.contact', compact('forms', 'status'));
+    }
+
+    public function indexRead() {
+        $forms = ContactForm::read()->paginate(25);
+        $status = 'read';
+        return view('admin.contact', compact('forms', 'status'));
+    }
+
+    public function indexSolved() {
+        $forms = ContactForm::solved()->paginate(25);
+        $status = 'solved';
+        return view('admin.contact', compact('forms', 'status'));
+    }
+
+    public function show($id) {
+        $submission = ContactForm::find($id);
+        if (!$submission) {
+            return Redirect::route('contact.unread')->with('error', 'This form submission does not exist');
+        }
+        if ($submission->status == ContactFormStatus::Unread) {
+            $submission->status = ContactFormStatus::Read;
+            $submission->save();
+        }
+
+        return view('admin.submission', compact('submission'));
+    }
+
     public function create(){
         return view('contact');
     }
@@ -68,5 +100,48 @@ class ContactFormController extends Controller
         });
 
         return Redirect::route('contact')->with('success', 'Your message was sent successfully!');
+    }
+
+    public function toggleRead($id) {
+        $form = ContactForm::findOrFail($id);
+
+        $form->status = ($form->status == ContactFormStatus::Unread) ? ContactFormStatus::Read : ContactFormStatus::Unread;
+
+        $form->save();
+
+        if ($form->status == ContactFormStatus::Unread) {
+            return Redirect::route('contact.unread')->with('success', 'Set form as unread');
+        } else {
+            return Redirect::route('contact.read')->with('success', 'Set form as read');
+        }
+    }
+
+    public function toggleSolved($id) {
+        $form = ContactForm::findOrFail($id);
+
+        $form->status = ($form->status == ContactFormStatus::Solved) ? ContactFormStatus::Read : ContactFormStatus::Solved;
+
+        $form->save();
+
+        if ($form->status == ContactFormStatus::Solved) {
+            return Redirect::route('contact.solved')->with('success', 'Set form as solved');
+        } else {
+            return Redirect::route('contact.read')->with('success', 'Set form as read');
+        }
+    }
+
+    public function destroy($id) {
+        $form = ContactForm::findOrFail($id);
+        $status = $form->status;
+
+        $form->delete();
+
+        if ($status == ContactFormStatus::Solved) {
+            return Redirect::route('contact.solved')->with('success', 'Deleted form submission');
+        } else if ($status == ContactFormStatus::Read) {
+            return Redirect::route('contact.read')->with('success', 'Deleted form submission');
+        } else {
+            return Redirect::route('contact.unread')->with('success', 'Deleted form submission');
+        }
     }
 }

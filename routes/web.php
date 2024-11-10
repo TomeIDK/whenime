@@ -99,6 +99,15 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::post('/admin/users', [AdminUsersController::class, 'store'])->name('admin-users.store');
     Route::patch('/admin/users/{user}/toggle-admin', [AdminUsersController::class, 'toggleAdmin'])->name('admin-users.toggleAdmin');
     Route::delete('/admin/users/delete/{id}', [AdminUsersController::class, 'destroy'])->name('admin-users.destroy');
+
+    // Contact
+    Route::get('/admin/forms/unread', [ContactFormController::class, 'indexUnread'])->name('contact.unread');
+    Route::get('/admin/forms/read', [ContactFormController::class, 'indexRead'])->name('contact.read');
+    Route::get('/admin/forms/solved', [ContactFormController::class, 'indexSolved'])->name('contact.solved');
+    Route::get('/admin/forms/view/{id}', [ContactFormController::class, 'show'])->name('contact.show');
+    Route::patch('/admin/forms/update/{id}', [ContactFormController::class, 'toggleRead'])->name('contact.toggleRead');
+    Route::patch('/admin/forms/update-status/{id}', [ContactFormController::class, 'toggleSolved'])->name('contact.toggleSolved');
+    Route::delete('/admin/forms/delete/{id}', [ContactFormController::class, 'destroy'])->name('contact.destroy');
 });
 
 require __DIR__.'/auth.php';

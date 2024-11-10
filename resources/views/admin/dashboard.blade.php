@@ -3,6 +3,9 @@
 @section('title', 'Admin Dashboard')
 
 @section('content')
+@php
+    use \App\ContactFormStatus;
+@endphp
     <div class="self-start w-full px-24">
         <h1 class="text-4xl font-bold">Whenime Overview</h1>
 
@@ -111,7 +114,8 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <x-link route="{{ route('profile', $user->username) }}" text="{{ $user->username }}" />
+                                                <x-link route="{{ route('profile', $user->username) }}"
+                                                    text="{{ $user->username }}" />
                                             </div>
                                         </div>
                                     </td>
@@ -122,7 +126,7 @@
                                     </td>
 
                                     {{-- Registered --}}
-                                    <td>{{ $user->created_at }}</td>
+                                    <td>{{ str_replace(' ', ' @ ', substr($user->created_at, 0, -3)) }}</td>
                                 </tr>
                             @endforeach
 
@@ -150,11 +154,12 @@
                                 <tr>
                                     {{-- Title --}}
                                     <td>
-                                        <x-link route="{{ route('news.show', $item->id) }}" text="{{ $item->title }}" />
+                                        <x-link route="{{ route('news.show', $item->id) }}"
+                                            text="{{ $item->title }}" />
                                     </td>
 
                                     {{-- Published --}}
-                                    <td>{{ $item->created_at }}</td>
+                                    <td>{{ str_replace(' ', ' @ ', substr($item->created_at, 0, -3)) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -175,29 +180,42 @@
                                 <th>Sender</th>
                                 <th>Email</th>
                                 <th>Date</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- row -->
-                            <tr>
-                                {{-- Subject --}}
-                                <td>
-                                    <p>Subject of the form</p>
-                                </td>
+                            @foreach ($forms as $form)
+                                <tr>
+                                    {{-- Subject --}}
+                                    <td>
+                                        <p>{{ $form->subject }}</p>
+                                    </td>
 
-                                {{-- Sender Name --}}
-                                <td>
-                                    <p>TomeIDK</p>
-                                </td>
+                                    {{-- Sender Name --}}
+                                    <td>
+                                        <p>{{ $form->name }}</p>
+                                    </td>
 
-                                {{-- Sender Email --}}
-                                <td>
-                                    <p>email@email.com</p>
-                                </td>
+                                    {{-- Sender Email --}}
+                                    <td>
+                                        <p>{{ $form->email }}</p>
+                                    </td>
 
-                                {{-- Date --}}
-                                <td>08/11/2024 @ 11:39</td>
-                            </tr>
+                                    {{-- Date --}}
+                                    <td>{{ str_replace(' ', ' @ ', substr($form->created_at, 0, -3)) }}</td>
+
+                                    {{-- Status --}}
+                                    <td>
+                                        @if ($form->status == ContactFormStatus::Unread)
+                                        <div class="text-white border-none badge bg-delete">{{ $form->status }}</div>
+                                            @elseif ($form->status == ContactFormStatus::Read)
+                                        <div class="text-white border-none badge bg-warning">{{ $form->status }}</div>
+
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

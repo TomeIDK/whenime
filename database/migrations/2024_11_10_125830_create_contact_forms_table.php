@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('subject');
             $table->text('message');
-            $table->enum('status', ['unread', 'read', 'solved'])->default('unread');
+            $table->enum('status', ['UNREAD', 'READ', 'SOLVED'])->default('UNREAD');
             $table->timestamps();
         });
     }

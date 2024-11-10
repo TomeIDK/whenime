@@ -13,7 +13,7 @@
         <ul class="min-h-full px-5 py-5 bg-background text-base-content w-80">
             <!-- Sidebar content here -->
             <li class="flex items-center">
-                <a href="{{ route('home') }}"
+                <a href="{{ route('admin-dashboard') }}"
                     class="text-2xl border-none shadow-none btn bg-background hover:bg-background hover:text-primary hover:border-none">Whenime
                     Admin</a>
                 {{-- Profile Picture --}}
@@ -101,7 +101,7 @@
             <li><a href="{{ route('admin-users') }}" class="admin-nav-link">Users</a></li>
             <li><a href="{{ route('news.admin') }}" class="admin-nav-link">News</a></li>
             <li><a href="{{ route('faq.admin') }}" class="admin-nav-link">FAQ</a></li>
-            <li><a class="admin-nav-link">Contact Forms</a></li>
+            <li><a href="{{ route('contact.unread') }}" class="admin-nav-link">Contact Forms</a></li>
 
             <li class="px-8 py-2 w-fit">
                 <h4 class="admin-nav-link-title">Analytics & Reports</h4>

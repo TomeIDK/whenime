@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactForm;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Schedule;
@@ -28,6 +29,8 @@ class AdminController extends Controller
 
         ];
 
-        return view('admin.dashboard', compact('users', 'schedules', 'news'));
+        $forms = ContactForm::whereIn('status', ['read', 'unread'])->latest('created_at')->take(5)->get();
+
+        return view('admin.dashboard', compact('users', 'schedules', 'news', 'forms'));
     }
 }

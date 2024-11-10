@@ -62,7 +62,7 @@
                             </td>
 
                             {{-- Published --}}
-                            <td>{{ $item->created_at }}</td>
+                            <td>{{ str_replace(' ', ' @ ', substr($item->created_at, 0, -3)) }}</td>
                             <td>{{-- Actions --}}
                                 <div class="dropdown dropdown-end">
                                     <div tabindex="0" role="button">

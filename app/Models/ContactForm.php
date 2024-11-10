@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\ContactFormStatus;
 
 class ContactForm extends Model
 {
@@ -15,4 +16,20 @@ class ContactForm extends Model
         'subject',
         'message',
     ];
+
+    protected $casts = [
+        'status' => ContactFormStatus::class,
+    ];
+
+    public function scopeUnread($query) {
+        return $query->where('status', 'unread');
+    }
+
+    public function scopeRead($query) {
+        return $query->where('status', 'read');
+    }
+
+    public function scopeSolved($query) {
+        return $query->where('status', 'solved');
+    }
 }
