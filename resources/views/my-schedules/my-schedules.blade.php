@@ -8,7 +8,7 @@
 
         <div class="grid grid-cols-4 gap-4 my-16">
             @foreach ($user->schedules as $schedule)
-                <div class="card border hover:border-primary hover:bg-blue-100 transition-all duration-300 w-96 text-text">
+                <div class="card border hover:border-primary hover:bg-blue-100 transition-all duration-300 text-text">
                     <div class="card-body p-6 gap-2">
                         <div class="flex gap-1 justify-between items-center">
                             <h2 class="card-title">{{ $schedule->name }}</h2>

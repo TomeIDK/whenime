@@ -92,7 +92,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request, $username): View
     {
-        $user = $request->user();
+        $user = User::where('username', $username)->firstOrFail();
         $isCurrentUser = Auth::check() && Auth::user()->username === $username;
         return view('profile.edit', compact('user', 'isCurrentUser'));
     }
@@ -100,7 +100,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request, $username): RedirectResponse
     {
         $request->validate([
             'about' => [
@@ -113,12 +113,21 @@ class ProfileController extends Controller
                 'image', 
                 'mimes:jpg,jpeg,png', 
                 'max:2048'
-            ]]);
+            ],
+            'date_of_birth' => [
+                'nullable', 
+                'date'
+            ]
+        ]);
 
         // Sanitize about input
         $about = strip_tags($request->about) ?? '';
         
-        $user = $request->user();
+        $user = User::where('username', $username)->first();
+
+        if (!$user) {
+            return Redirect::route('home')->with('error', 'This profile does not exist');
+        }
 
         if ($request->hasFile('profile_picture')) {
             $path = $request->file('profile_picture')->store('profile_pictures', 'public');
@@ -126,6 +135,9 @@ class ProfileController extends Controller
         }
 
         $user->about = $about;
+        if(!$user->date_of_birth){
+            $user->date_of_birth = $request->date_of_birth;
+        }
 
         $user->save();
 

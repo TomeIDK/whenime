@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
 
-class AdminUsersController extends Controller
+class UserController extends Controller
 {
     public function index() {
         $users = User::latest()->paginate(25);

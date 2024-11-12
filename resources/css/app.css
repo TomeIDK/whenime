@@ -18,10 +18,6 @@
     @apply underline text-text hover:text-primary-hover-dark;
 }
 
-.admin-nav-link {
-    @apply p-1 my-2 cursor-pointer mx-11 hover:text-primary
-}
-
 .admin-nav-link-title {
     @apply mt-2 text-sm cursor-default text-discard
 }

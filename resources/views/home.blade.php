@@ -2,9 +2,6 @@
 
 @section('title', 'Whenime')
 
-
-
-
 @section('content')
     <div class="hero min-h-svh hero-gradient">
         <div class="hero-content flex flex-col lg:flex-row justify-center items-center">

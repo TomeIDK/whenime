@@ -12,8 +12,6 @@
             <div class="flex gap-12 justify-center">
                 <x-cta-nav-link route="{{ route('contact') }}" class="font-bold"
                     text='Contact us<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="4 0 24 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="bevel"><path d="M9 18l6-6-6-6"/></svg>' />
-                <x-cta-nav-link route="{{ route('contact') }}" class="font-bold"
-                    text='Give Feedback<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="4 0 24 20" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="bevel"><path d="M9 18l6-6-6-6"/></svg>' />
             </div>
         </div>
 

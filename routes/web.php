@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminUsersController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\NewsController;
@@ -36,13 +36,10 @@ Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('pro
 Route::get('/profile/{username}/schedules/{scheduleName}', [ProfileController::class, 'showSchedule'])->name('profile-schedule.show');
 
 Route::middleware(['auth', OwnerOrAdminMiddleware::class])->group(function () { // Only allow access if user is owner or an admin
-    // Profile
     Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])
     ->name('profile.edit');
     Route::patch('/profile/{username}', [ProfileController::class, 'update'])
     ->name('profile.update');
-    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 });
 
 // News 
@@ -95,10 +92,10 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
 
     // Users
-    Route::get('/admin/users', [AdminUsersController::class, 'index'])->name('admin-users');
-    Route::post('/admin/users', [AdminUsersController::class, 'store'])->name('admin-users.store');
-    Route::patch('/admin/users/{user}/toggle-admin', [AdminUsersController::class, 'toggleAdmin'])->name('admin-users.toggleAdmin');
-    Route::delete('/admin/users/delete/{id}', [AdminUsersController::class, 'destroy'])->name('admin-users.destroy');
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin-users');
+    Route::post('/admin/users', [UserController::class, 'store'])->name('admin-users.store');
+    Route::patch('/admin/users/{user}/toggle-admin', [UserController::class, 'toggleAdmin'])->name('admin-users.toggleAdmin');
+    Route::delete('/admin/users/delete/{id}', [UserController::class, 'destroy'])->name('admin-users.destroy');
 
     // Contact
     Route::get('/admin/forms/unread', [ContactFormController::class, 'indexUnread'])->name('contact.unread');
