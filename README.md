@@ -67,6 +67,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Sources
 Manage save button state based on original data: https://chatgpt.com/share/673db74e-7288-800b-b259-63b53fd0dc29
+Jikan Setup: https://chatgpt.com/share/673dd63e-d798-800b-b461-3b882ec0c341
 
 
 ## Checklist
