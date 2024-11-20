@@ -3,7 +3,7 @@
 @section('title', 'Edit News - ' . $currentNews->title)
 
 @section('content')
-    <div class="drawer lg:drawer-open">
+    <div id="editor" class="drawer lg:drawer-open" data-original-state="{{ json_encode(['title' => $currentNews->title, 'content' => $currentNews->content]) }}">
         <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
         <div class="flex flex-col items-center gap-6 my-16 drawer-content">
             <!-- Page content -->
@@ -17,8 +17,8 @@
 
                 {{-- Buttons --}}
                 <div class="flex justify-end gap-2">
-                    <button type="submit"
-                        class="text-white border-none btn btn-sm bg-success hover:bg-success-hover">Save</button>
+                    <button id="btnSave" type="submit" class="text-white border-none btn btn-sm bg-success hover:bg-success-hover"
+                        disabled>Save</button>
                     <a href="{{ route('news.show', $currentNews->id) }}"
                         class="border-none btn btn-sm hover:bg-discard-hover hover:text-white">Discard</a>
                 </div>
@@ -26,7 +26,7 @@
                 {{-- Title --}}
                 <div class="flex flex-col gap-2">
                     <span class="label-text">Title</span>
-                    <input class="text-3xl font-bold input input-bordered" name="title"
+                    <input id="title" class="text-3xl font-bold input input-bordered" name="title"
                         value="{{ old('title', $currentNews->title) }}" required />
                     @error('title')
                         <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
@@ -47,7 +47,8 @@
                     {{-- Image --}}
                     <div class="relative w-1/2 mt-4">
                         <div class="relative overflow-hidden rounded">
-                            <img src="{{ $currentNews->image ? asset('storage/' . $currentNews->image) : 'https://placehold.co/700x400?text=Upload+Image' }}" id="newsImage" class="object-cover">
+                            <img src="{{ $currentNews->image ? asset('storage/' . $currentNews->image) : 'https://placehold.co/700x400?text=Upload+Image' }}"
+                                id="newsImage" class="object-cover">
 
                             <input type="file" id="news_image" name="image" accept="image/*" class="hidden"
                                 onchange="previewImage(event)" />
@@ -72,7 +73,8 @@
 
                     {{-- Content --}}
                     <span class="label-text">Content</span>
-                    <textarea rows="25" name="content" class="textarea textarea-bordered" placeholder="Article content" required>{{ old('content', $currentNews->content) }}</textarea>
+                    <textarea id="content" rows="25" name="content" class="textarea textarea-bordered" placeholder="Article content"
+                        required>{{ old('content', $currentNews->content) }}</textarea>
                     @error('content')
                         <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
                     @enderror
@@ -93,12 +95,26 @@
                 @endforeach
             </ul>
         </div>
-
     </div>
+
     <script>
+        const btnSave = document.getElementById("btnSave");
+        const inputTitle = document.getElementById("title");
+        const inputContent = document.getElementById("content");
+        let imageChanged = false;
+
+        inputTitle.addEventListener('input', () => {
+            btnSave.disabled = !hasChanged();
+        });
+
+        inputContent.addEventListener('input', () => {
+            btnSave.disabled = !hasChanged();
+        });
+
         function previewImage(event) {
             const file = event.target.files[0];
             const img = document.getElementById('newsImage');
+            const inputImage = document.getElementById("news_image");
 
             if (file) {
                 const reader = new FileReader();
@@ -106,6 +122,28 @@
                     img.src = e.target.result; // Set the image source to the uploaded file
                 }
                 reader.readAsDataURL(file); // Read the file as a data URL
+            }
+
+            imageChanged = inputImage.files.length > 0;
+            btnSave.disabled = !hasChanged();
+        }
+
+        function hasChanged() {
+            const editor = document.getElementById("editor")
+            const original = JSON.parse(editor.dataset.originalState);
+
+            const title = document.getElementById("title");
+            const content = document.getElementById("content");
+
+            if (imageChanged) {
+                return true;
+            }
+
+            if (title.value !== original.title) {
+                return true;
+            }
+            if (content.value !== original.content) {
+                return true;
             }
         }
     </script>

@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\FAQController;
+use App\Http\Controllers\JikanController;
+use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MySchedulesController;
@@ -105,6 +107,13 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::patch('/admin/forms/update/{id}', [ContactFormController::class, 'toggleRead'])->name('contact.toggleRead');
     Route::patch('/admin/forms/update-status/{id}', [ContactFormController::class, 'toggleSolved'])->name('contact.toggleSolved');
     Route::delete('/admin/forms/delete/{id}', [ContactFormController::class, 'destroy'])->name('contact.destroy');
+});
+
+Route::get('/explore', [AnimeController::class, 'index'])->name('anime.index');
+
+// Jikan API
+Route::middleware(['auth', 'throttle:60,1', 'throttle:3,1'])->group(function () {
+    Route::get('/anime/search', [JikanController::class, 'search'])->name('anime.search');
 });
 
 require __DIR__.'/auth.php';

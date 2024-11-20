@@ -9,13 +9,15 @@ use Illuminate\View\Component;
 class CtaButton extends Component
 {
     public $text;
+    public $id;
     public $class;
     /**
      * Create a new component instance.
      */
-    public function __construct($text, $class = '')
+    public function __construct($text, $id = '', $class = '')
     {
         $this->text = $text;
+        $this->id = $id;
         $this->class = $class;
     }
 

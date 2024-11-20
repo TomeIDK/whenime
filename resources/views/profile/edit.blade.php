@@ -7,23 +7,24 @@
     <form method="POST" action="{{ route('profile.update', $user->username) }}" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
-        <div class="flex flex-row h-full w-full grow p-8 justify-center gap-16">
+        <div id="editor" class="flex flex-row justify-center w-full h-full gap-16 p-8 grow"
+            data-original-state="{{ json_encode(['about' => $user->about]) }}">
             <div class="flex flex-col gap-2">
-                <div class="avatar relative">
-                    <div class="w-96 rounded overflow-hidden relative">
+                <div class="relative avatar">
+                    <div class="relative overflow-hidden rounded w-96">
 
                         <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('storage/profile_pictures/default-profile-picture.jpg') }}"
-                            id="profileImage" class="w-full h-full object-cover" />
+                            id="profileImage" class="object-cover w-full h-full" />
 
                         <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="hidden"
                             onchange="previewImage(event)" />
 
                         <label for="profile_picture"
-                            class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded transition-opacity duration-300 opacity-0 hover:opacity-100 cursor-pointer">
-                            <span class="text-white text-sm">Upload New Profile Picture</span>
+                            class="absolute inset-0 flex items-center justify-center transition-opacity duration-300 bg-black bg-opacity-50 rounded opacity-0 cursor-pointer hover:opacity-100">
+                            <span class="text-sm text-white">Upload New Profile Picture</span>
                         </label>
 
-                        <div class="absolute top-2 right-2 bg-white rounded-full p-1 shadow">
+                        <div class="absolute p-1 bg-white rounded-full shadow top-2 right-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                 fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -33,7 +34,7 @@
                     </div>
                 </div>
                 @error('profile_picture')
-                    <span class="text-red-500 mt-2 label-text-alt">{{ $message }}</span>
+                    <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
                 @enderror
                 <div class="flex justify-between text-discard">
                     @if ($user->date_of_birth)
@@ -46,24 +47,6 @@
                             </svg>
                             <p>{{ date('F j', strtotime($user->date_of_birth)) }}</p>
                         </div>
-                    @else
-                        <div class="flex flex-col">
-                            <div class="label">
-                                <span class="label-text">Enter Date of Birth</span>
-                            </div>
-                            <label class="flex items-center gap-2 input input-bordered">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-balloon" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M8 9.984C10.403 9.506 12 7.48 12 5a4 4 0 0 0-8 0c0 2.48 1.597 4.506 4 4.984M13 5c0 2.837-1.789 5.227-4.52 5.901l.244.487a.25.25 0 1 1-.448.224l-.008-.017c.008.11.02.202.037.29.054.27.161.488.419 1.003.288.578.235 1.15.076 1.629-.157.469-.422.867-.588 1.115l-.004.007a.25.25 0 1 1-.416-.278c.168-.252.4-.6.533-1.003.133-.396.163-.824-.049-1.246l-.013-.028c-.24-.48-.38-.758-.448-1.102a3 3 0 0 1-.052-.45l-.04.08a.25.25 0 1 1-.447-.224l.244-.487C4.789 10.227 3 7.837 3 5a5 5 0 0 1 10 0m-6.938-.495a2 2 0 0 1 1.443-1.443C7.773 2.994 8 2.776 8 2.5s-.226-.504-.498-.459a3 3 0 0 0-2.46 2.461c-.046.272.182.498.458.498s.494-.227.562-.495" />
-                            </svg>
-                                <input type="date" name="date_of_birth" class="border-none grow focus:ring-transparent"
-                                    value="{{ old('date_of_birth') }}" autocomplete="bday-day" />
-                            </label>
-                        </div>
-                        @error('date_of_birth')
-                            <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
-                        @enderror
                     @endif
                     <div class="flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -79,10 +62,10 @@
                     </div>
                 </div>
 
-                <x-cta-button class="w-full self-center mt-3 bg-success hover:bg-success-hover text-white"
+                <x-cta-button id="btnSave" class="self-center w-full mt-3 text-white bg-success hover:bg-success-hover"
                     text="Save Profile" />
                 <a href="{{ route('profile', $user->username) }}"
-                    class="btn border-none hover:bg-discard-hover hover:text-white">Discard</a>
+                    class="border-none btn hover:bg-discard-hover hover:text-white">Discard</a>
             </div>
 
             <div class="flex flex-col w-1/2 gap-2">
@@ -94,18 +77,23 @@
                     <span id="char-track" class="label-text-alt text-primary"><span
                             id="char-count">{{ 2000 - strlen($user->about) }}</span> characters left</span>
                 </div>
-                <textarea id="about" rows="25" name="about" class="textarea textarea-bordered resize-none"
+                <textarea id="about" rows="25" name="about" class="resize-none textarea textarea-bordered"
                     placeholder="Write something about yourself" oninput="updateCharacterCount()">{{ old('about', $user->about) }}</textarea>
                 @error('about')
-                    <span class="text-red-500 mt-2 label-text-alt">{{ $message }}</span>
+                    <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
                 @enderror
             </div>
         </div>
     </form>
     <script>
+        const btnSave = document.getElementById("btnSave");
+        btnSave.disabled = true;
+        let imageChanged = false;
+
         function previewImage(event) {
             const file = event.target.files[0];
             const img = document.getElementById('profileImage');
+            const inputImage = document.getElementById("profile_picture");
 
             if (file) {
                 const reader = new FileReader();
@@ -114,6 +102,9 @@
                 }
                 reader.readAsDataURL(file); // Read the file as a data URL
             }
+
+            imageChanged = inputImage.files.length > 0;
+            btnSave.disabled = !hasChanged();
         }
 
         function updateCharacterCount() {
@@ -130,6 +121,24 @@
                 charTrack.style.color = "#FFA500";
             } else {
                 charTrack.style.color = "#4A90E2";
+            }
+
+            btnSave.disabled = !hasChanged();
+
+        }
+
+        function hasChanged() {
+            const editor = document.getElementById("editor")
+            const original = JSON.parse(editor.dataset.originalState);
+
+            const about = document.getElementById("about");
+
+            if (imageChanged) {
+                return true;
+            }
+
+            if (about.value !== original.about) {
+                return true;
             }
         }
     </script>
