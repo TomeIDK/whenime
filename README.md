@@ -66,8 +66,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## Sources
-Manage save button state based on original data: https://chatgpt.com/share/673db74e-7288-800b-b259-63b53fd0dc29
-Jikan Setup: https://chatgpt.com/share/673dd63e-d798-800b-b461-3b882ec0c341
+Manage save button state based on original data: https://chatgpt.com/share/673db74e-7288-800b-b259-63b53fd0dc29  
+Jikan Setup: https://chatgpt.com/share/673dd63e-d798-800b-b461-3b882ec0c341  
+XSS, CSRF, Cors Explanation: https://chatgpt.com/share/673fa303-4d44-800b-8bf5-7d8fc91b1d05
 
 
 ## Checklist
