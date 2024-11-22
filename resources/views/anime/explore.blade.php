@@ -4,26 +4,26 @@
 
 @section('content')
 
-    @foreach ($upcoming as $index => $anime)
-        <div class="p-4">
-            <small>Index: {{ $index }}</small>
-            <small>ID:{{ $anime['mal_id'] }}</small>
-            @foreach ($anime['titles'] as $title)
-                @if ($title['type'] == 'English')
-                    <h1>English: {{ $title['title'] }}</h1>
-                @elseif ($title['type'] == 'Japanese')
-                    <h2>Japanese: {{ $title['title'] }}</h2>
-                @elseif ($title['type'] == 'Default')
-                    <h2>Default: {{ $title['title'] }}</h2>
-                @elseif ($title['type'] == 'Synonym')
-                    <h2>Synonym: {{ $title['title'] }}</h2>
-                @endif
-            @endforeach
-            <a href="{{ $anime['url'] }}" target="_blank">URL</a>
-            <img src="{{ $anime['images']['jpg']['image_url'] }}" alt="">
-            <p>Type: {{ $anime['type'] }}</p>
-            <p>episodes: {{ $anime['episodes'] ?? 'N/A' }}</p>
-            <p>Status: {{ $anime['status'] }}</p>
-        </div>
-    @endforeach
+    <h1>Top Airing Anime ></h1>
+    <div class="grid grid-cols-3 p-8">
+        @foreach ($airing as $index => $anime)
+            <div class="flex p-4">
+                <img src="{{ $anime['images']['jpg']['image_url'] }}" alt="" class="object-cover max-h-48 aspect-auto">
+
+                <div class="px-4">
+                    <p>Rating: {{ $anime['score'] }}</p>
+                    @foreach ($anime['titles'] as $title)
+                        @if ($title['type'] == 'English')
+                            <a href="{{ $anime['url'] }}">
+                                <h2>Default: {{ $title['title'] }}</h2>
+                            </a>
+                        @endif
+                    @endforeach
+                    <p>Airing time: {{ $anime['broadcast']['string'] }}</p>
+                    <p>Type: {{ $anime['type'] }}</p>
+                    <p>Episodes: {{ $anime['episodes'] ?? 'N/A' }}</p>
+                </div>
+            </div>
+        @endforeach
+    </div>
 @endsection

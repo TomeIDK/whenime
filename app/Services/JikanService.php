@@ -58,6 +58,21 @@ class JikanService {
         ];
     }
 
+        // Get top airing anime
+        public function getTopAiringAnime($page = 1, $limitPerPage = 10) {
+
+            $response = $this->makeRequest('top/anime', [
+                'filter' => "airing",
+                'page' => $page,
+                'limit' => $limitPerPage,
+            ]);
+    
+            return [
+                'data' => $response['data'] ?? [],
+                'pagination' => $response['pagination'] ?? [],
+            ];
+        }
+
     // Get anime based on year and season
     public function getAnimeBySeason($year, $season) {
         return $this->makeRequest("seasons/" . $year . "/" . $season);

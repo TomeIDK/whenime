@@ -18,9 +18,11 @@ class AnimeController extends Controller
         $page = $request->get('page', 1);
 
         $response = $this->jikanService->getUpcomingAnime($page, 25);
-
         $upcoming = $response['data'];
-        $pagination = $response['pagination'];
-        return view('anime.explore', compact('upcoming', 'pagination'));
+
+        $response = $this->jikanService->getTopAiringAnime($page, 25);
+        $airing = $response['data'];
+        $upcomingPagination = $response['pagination'];
+        return view('anime.explore', compact('upcoming', 'upcomingPagination', 'airing'));
     }
 }
