@@ -17,12 +17,31 @@ class AnimeController extends Controller
     public function index(Request $request) {
         $page = $request->get('page', 1);
 
-        $response = $this->jikanService->getUpcomingAnime($page, 25);
-        $upcoming = $response['data'];
+        $airing = $this->jikanService->getTopAiringAnime($page, 6)['data'];
 
-        $response = $this->jikanService->getTopAiringAnime($page, 25);
-        $airing = $response['data'];
-        $upcomingPagination = $response['pagination'];
-        return view('anime.explore', compact('upcoming', 'upcomingPagination', 'airing'));
+        $nextSeason = $this->getNextSeason();
+        $popularUpcoming = $this->jikanService->getAnimeBySeason($nextSeason['year'], $nextSeason['season'], $page, 6)['data'];
+        usort($popularUpcoming, function ($a, $b) {
+            return $a['popularity'] <=> $b['popularity'];
+        });
+
+        return view('anime.explore', compact('airing', 'popularUpcoming'));
+    }
+
+    public function getNextSeason() {
+        $currentMonth = date('n');
+        $currentYear = date('Y');
+
+        $seasons = ['winter', 'spring', 'summer', 'fall'];
+        $seasonIndex = (int)($currentMonth - 1) / 3;
+        $nextSeasonIndex = ($seasonIndex + 1) % 4;
+        $nextYear = $currentYear + (($nextSeasonIndex === 0) ? 1 : 0);
+
+        $nextSeason = $seasons[$nextSeasonIndex];
+
+        return [
+            'year' => $nextYear,
+            'season' => $nextSeason,
+        ];
     }
 }

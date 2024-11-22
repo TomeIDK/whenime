@@ -45,24 +45,29 @@ class JikanService {
         return $this->makeRequest('anime', ['q'=> $query]);
     }
 
-    // Get upcoming anime (not yet airing)
-    public function getUpcomingAnime($page = 1, $limitPerPage = 25) {
-        $response = $this->makeRequest('seasons/upcoming', [
-            'page' => $page,
-            'limit' => $limitPerPage,
-        ]);
-
-        return [
-            'data' => $response['data'] ?? [],
-            'pagination' => $response['pagination'] ?? [],
-        ];
-    }
+        // Get upcoming  anime (not yet airing)
+        public function getUpcomingAnime($page = 1, $limitPerPage = 6) {
+            $response = $this->makeRequest('seasons/upcoming', [
+                'filter' => "tv",
+                'sfw',
+                'continuing',
+                'page' => $page,
+                'limit' => $limitPerPage,
+            ]);
+        
+            return [
+                'data' => $response['data'] ?? [],
+                'pagination' => $response['pagination'] ?? [],
+            ];
+        }
 
         // Get top airing anime
         public function getTopAiringAnime($page = 1, $limitPerPage = 10) {
 
             $response = $this->makeRequest('top/anime', [
-                'filter' => "airing",
+                'sfw',
+                'filter' => 'airing',
+                'type' => 'tv',
                 'page' => $page,
                 'limit' => $limitPerPage,
             ]);
@@ -74,8 +79,14 @@ class JikanService {
         }
 
     // Get anime based on year and season
-    public function getAnimeBySeason($year, $season) {
-        return $this->makeRequest("seasons/" . $year . "/" . $season);
+    public function getAnimeBySeason($year, $season, $page = 1, $limitPerPage = 6) {
+        return $this->makeRequest("seasons/" . $year . "/" . $season, [
+            'filter' => "tv",
+            'sfw',
+            'continuing',
+            'page' => $page,
+            'limit' => $limitPerPage,
+        ]);
     }
 
     // Get anime details by id
