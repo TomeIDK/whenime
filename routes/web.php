@@ -55,7 +55,7 @@ Route::prefix('/contact')->group(function () {
 // Profile 
 Route::prefix('/profile/{username}')->group(function () {
     Route::get('/', [ProfileController::class, 'show'])->name('profile');
-    Route::get('/schedules/{scheduleName}', [ProfileController::class, 'showSchedule'])->name('profile-schedule.show');
+    Route::get('/schedules/{season}-{year}', [ProfileController::class, 'showSchedule'])->name('profile-schedule.show');
 
     // Auth, Owner or Admin
     Route::middleware(['auth', OwnerOrAdminMiddleware::class])->group(function () {
@@ -91,10 +91,10 @@ Route::prefix('/my-schedules')->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::get('/', [MySchedulesController::class, 'index'])
         ->name('my-schedules');
-        Route::get('/{scheduleName}', [MySchedulesController::class, 'edit'])
+        Route::get('/{season}-{year}', [MySchedulesController::class, 'edit'])
         ->name('my-schedules.edit');
 
-        Route::patch('/{scheduleName}', [MySchedulesController::class, 'update'])
+        Route::patch('/{season}-{year}', [MySchedulesController::class, 'update'])
         ->name('my-schedules.update');
 
         Route::post('/store', [MySchedulesController::class, 'store'])
@@ -108,7 +108,7 @@ Route::prefix('/my-schedules')->group(function () {
 // Schedule Item
 Route::prefix('/schedule-item')->group(function () {
     Route::middleware(['auth'])->group(function () {
-        Route::post('/{scheduleName}/add', [ScheduleItemController::class, 'store'])
+        Route::post('/{season}-{year}/add', [ScheduleItemController::class, 'store'])
         ->name('schedule-item.store');
 
         Route::patch('/{id}', [ScheduleItemController::class, 'update'])

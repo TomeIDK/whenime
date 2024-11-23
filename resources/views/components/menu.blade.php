@@ -10,7 +10,7 @@
                     <div class="flex-none">
                         {{-- Links --}}
                         <ul class="px-1 menu menu-horizontal">
-                            <li><x-nav-link route="{{ route('home') }}" text="Home" /></li>
+                            <li><x-nav-link route="{{ route('anime.index') }}" text="Explore" /></li>
                             <li><x-nav-link route="{{ route('news.latest') }}" text="News" /></li>
                             <li><x-nav-link route="{{ route('faq') }}" text="FAQ" /></li>
                             <li><x-nav-link route="{{ route('contact') }}" text="Contact" /></li>

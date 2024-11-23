@@ -52,14 +52,14 @@ class ProfileController extends Controller
         return view('profile.profile', compact('user', 'isCurrentUser', 'currentSchedule'));
     }
 
-    public function showSchedule($username, $scheduleName) {
+    public function showSchedule($username, $season, $year) {
         $user = User::with(['schedules' => function ($query) {
             $query->where('is_public', true);
         }])->where('username', $username)->firstOrFail();
 
         $isCurrentUser = Auth::check() && Auth::user()->username === $username;
 
-        $currentSchedule = $user->schedules->firstWhere('name', $scheduleName);
+        $currentSchedule = $user->schedules->where('season', $season)->where('year', $year)->first();
 
         $dayOrder = [
             'Monday',

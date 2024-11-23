@@ -8,10 +8,10 @@
 
         <div class="grid grid-cols-4 gap-4 my-16">
             @foreach ($user->schedules as $schedule)
-                <div class="card border hover:border-primary hover:bg-blue-100 transition-all duration-300 text-text">
-                    <div class="card-body p-6 gap-2">
-                        <div class="flex gap-1 justify-between items-center">
-                            <h2 class="card-title">{{ $schedule->name }}</h2>
+                <div class="transition-all duration-300 border card hover:border-primary hover:bg-blue-100 text-text">
+                    <div class="gap-2 p-6 card-body">
+                        <div class="flex items-center justify-between gap-1">
+                            <h2 class="card-title">{{ $schedule->season . ' ' . $schedule->year }}</h2>
                             @if ($schedule->is_public)
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round"
@@ -32,15 +32,15 @@
                             @endif
                         </div>
                         <small>{{ $schedule->schedule_items_count }} anime</small>
-                        <div class="card-actions justify-between mt-4">
-                            <x-cta-nav-link route="{{ route('my-schedules.edit', $schedule->name) }}"
-                                class="btn-sm self-start flex flex-col items-center gap-1"
+                        <div class="justify-between mt-4 card-actions">
+                            <x-cta-nav-link route="{{ route('my-schedules.edit', [$schedule->season, $schedule->year]) }}"
+                                class="flex flex-col items-center self-start gap-1 btn-sm"
                                 text='
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" 
                             fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg> 
                             Edit' />
-                            <a class="btn btn-sm border-none bg-delete hover:bg-delete-hover text-white flex flex-col items-center gap-1"
+                            <a class="flex flex-col items-center gap-1 text-white border-none btn btn-sm bg-delete hover:bg-delete-hover"
                                 onclick="showDeleteModal({{ $schedule->id }})">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
@@ -57,54 +57,77 @@
                     </div>
                 </div>
             @endforeach
-            <div class="card border hover:border-primary hover:bg-blue-100 transition-all duration-300 w-96 text-text">
-                <div class="card-body p-0 gap-2">
-                    <button class="my-auto w-full h-full p-6" onclick="my_modal_6.showModal()">
-                        <div class="gap-1 text-discard flex flex-col items-center">
+            <div class="transition-all duration-300 border card hover:border-primary hover:bg-blue-100 w-96 text-text">
+                <div class="gap-2 p-0 card-body">
+                    <button class="w-full h-full p-6 my-auto" onclick="my_modal_6.showModal()">
+                        <div class="flex flex-col items-center gap-1 text-discard">
                             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
                                 fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
-                            <h2 class="card-title font-normal">Create new schedule</h2>
+                            <h2 class="font-normal card-title">Create new schedule</h2>
                         </div>
                     </button>
                 </div>
             </div>
 
             <!-- Create Schedule Modal -->
-            <dialog id="my_modal_6" class="modal modal-bottom sm:modal-middle text-center">
+            <dialog id="my_modal_6" class="text-center modal modal-bottom sm:modal-middle">
                 <div class="modal-box">
                     <form method="dialog">
-                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
                     </form>
                     <h3 class="text-lg font-bold">Create a new schedule</h3>
-                    <div class="modal-action flex gap-4 justify-center mt-2">
+                    <div class="flex justify-center gap-4 mt-2 modal-action">
                         {{-- Create Schedule --}}
                         <form method="POST" action="{{ route('my-schedules.store') }}" class="flex flex-col gap-2">
                             @csrf
-                            <div>
-                                <div class="label">
-                                    <span class="label-text">Schedule name</span>
+                            <div class="flex justify-around gap-4">
+                                <div>
+                                    <div class="label">
+                                        <span class="label-text">Season</span>
+                                    </div>
+                                    <select name="season" class="w-full select select-bordered" required>
+                                        @foreach ($seasons as $season)
+                                            @if ($season == $currentSeason)
+                                                <option selected="selected" value="{{ $season }}">{{ $season }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $season }}">{{ $season }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <label class="input input-bordered flex items-center gap-2">
-                                    <input type="text" name="name" class="grow border-none focus:ring-transparent"
-                                        placeholder="Schedule" :value="old('name')" required autofocus />
-                                </label>
-                                @error('name')
-                                    <span class="text-red-500 mt-2 label-text-alt">{{ $message }}</span>
-                                @enderror
+                                <div>
+                                    <div class="label">
+                                        <span class="label-text">Year</span>
+                                    </div>
+                                    <select name="year" class="w-full select select-bordered" required>
+                                        <option value="{{ date('Y') - 1 }}">{{ date('Y') - 1 }}</option>
+                                        <option selected="selected" value="{{ date('Y') }}">{{ date('Y') }}
+                                        </option>
+                                        <option value="{{ date('Y') + 1 }}">{{ date('Y') + 1 }}</option>
+                                    </select>
+
+                                </div>
                             </div>
+                            @error('season')
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
+                            @enderror
+                            @error('year')
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
+                            @enderror
                             <div>
-                                <label class="label cursor-pointer flex flex-row justify-start gap-1">
+                                <label class="flex flex-row justify-start gap-1 cursor-pointer label">
                                     <input type="checkbox" name="is_public"
-                                        class="checkbox checkbox-xs rounded justify-start" value="1" checked />
+                                        class="justify-start rounded checkbox checkbox-xs" value="1" checked />
                                     <span class="label-text">Public</span>
                                 </label>
                             </div>
                             <button type="submit"
-                                class="btn btn-sm border-none bg-success hover:bg-success-hover text-white outline-none">Create
+                                class="text-white border-none outline-none btn btn-sm bg-success hover:bg-success-hover">Create
                                 schedule</button>
                         </form>
                     </div>
@@ -112,21 +135,21 @@
             </dialog>
 
             <!-- Delete Confirmation Modal -->
-            <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle text-center">
+            <dialog id="my_modal_5" class="text-center modal modal-bottom sm:modal-middle">
                 <div class="modal-box">
                     <h3 class="text-lg font-bold">Are you sure you want to delete this schedule?</h3>
-                    <p class="text-discard underline">This action cannot be undone!</p>
-                    <div class="modal-action flex gap-4 justify-center">
+                    <p class="underline text-discard">This action cannot be undone!</p>
+                    <div class="flex justify-center gap-4 modal-action">
                         {{-- Delete Schedule --}}
                         <form method="POST" action="{{ route('my-schedules.destroy', ':id') }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit"
-                                class="btn btn-sm border-none bg-delete hover:bg-delete-hover text-white outline-none">Yes,
+                                class="text-white border-none outline-none btn btn-sm bg-delete hover:bg-delete-hover">Yes,
                                 delete</button>
                         </form>
                         <form method="dialog">
-                            <button class="btn btn-sm border-none bg-discard text-white hover:bg-discard-hover">No,
+                            <button class="text-white border-none btn btn-sm bg-discard hover:bg-discard-hover">No,
                                 don't
                                 delete</button>
                         </form>

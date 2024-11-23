@@ -9,35 +9,67 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use App\Services\SeasonService;
 
 
 class MySchedulesController extends Controller
 {
+    protected $seasonService;
+
+    public function __construct(SeasonService $seasonService)
+    {
+        $this->seasonService = $seasonService;
+    }
+
     public function index() {
         $user = User::with('schedules')->find(Auth::id());
 
         foreach ($user->schedules as $schedule) {
             $schedule->schedule_items_count = $schedule->scheduleItems->count();
         }
-        return view('my-schedules.my-schedules', compact('user'));
+
+        $seasons = ["Winter", "Spring", "Summer", "Fall"];
+        $currentSeason = $this->seasonService->getCurrentSeason();
+        return view('my-schedules.my-schedules', compact('user', 'seasons', 'currentSeason'));
     }
 
     public function store(Request $request): RedirectResponse 
     {
         $request->validate([
-            'name' => [
+            'season' => [
                 'required',
                 'string',
-                'max:20'
-            ] ,
+                'in:Winter,Spring,Summer,Fall'
+            ],
+            'year' => [
+                'required',
+                'numeric',
+                'digits:4',
+                'min:' . (date("Y") - 1),
+                'max:' . (date("Y") + 1),
+            ],
             'is_public' => [
                 'boolean'
             ]
         ]);
 
+        $existingSchedule = Schedule::where('user_id', Auth::id())
+            ->where('season', $request->season)
+            ->where('year', $request->year)
+            ->first();
+
+        // Check if schedule already exists
+        if ($existingSchedule) {
+            return Redirect::back()->withErrors([
+                'season' => 'You already have a schedule for this season and year',
+            ])->withInput();
+        }
+
+        // Create and save schedule
         $schedule = new Schedule();
         $schedule->user_id = Auth::user()->id;
-        $schedule->name = $request->name;
+        $schedule->season = $request->season;
+        $schedule->year = $request->year;
         $schedule->is_public = $request->has('is_public');
 
         $schedule->save();
@@ -45,8 +77,8 @@ class MySchedulesController extends Controller
         return Redirect::route('my-schedules')->with('success', 'Schedule created successfully');
     }
 
-    public function edit($scheduleName) {
-        $ownershipCheck = $this->checkOwnershipByScheduleName($scheduleName);
+    public function edit($season, $year) {
+        $ownershipCheck = $this->checkOwnershipByScheduleName($season, $year);
 
         if ($ownershipCheck instanceof \Illuminate\Http\RedirectResponse) {
             return $ownershipCheck; 
@@ -108,22 +140,24 @@ class MySchedulesController extends Controller
     }
 
     // Checks if user owns the schedule or is an admin
-    private function checkOwnershipByScheduleName($scheduleName) {
+    // TODO: Check access vulnerability at $schedule fetch line
+    private function checkOwnershipByScheduleName($season, $year) {
         $user = Auth::user();
 
-        $schedule = Schedule::with('scheduleItems')->where('user_id', $user->id)->where('name', $scheduleName)->first();
+        $schedule = Schedule::with('scheduleItems')->where('user_id', $user->id)->where('season', $season)->where('year', $year)->first();
 
         if($user->is_admin) {
             return $schedule;
         }
 
         if(!$schedule) {
-            return Redirect::route('home')->with('error', 'You do not have access to this schedule.');
+            return Redirect::route('home')->with('error', 'This schedule does not exist.');
         }
         return $schedule;
     }
 
     // Checks if user owns the schedule or is an admin
+    // TODO: Check access vulnerability at $schedule fetch line
     private function checkOwnershipByScheduleId($scheduleId) {
         $user = Auth::user();
 
@@ -134,7 +168,7 @@ class MySchedulesController extends Controller
         }
 
         if(!$schedule) {
-            return Redirect::route('home')->with('error', 'You do not have access to this schedule.');
+            return Redirect::route('home')->with('error', 'This schedule does not exist.');
         }
         return $schedule;
     }

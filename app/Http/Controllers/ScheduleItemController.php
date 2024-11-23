@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class ScheduleItemController extends Controller
 {
-    public function store(Request $request, $scheduleName): RedirectResponse
+    public function store(Request $request, $season, $year): RedirectResponse
     {
         $request->validate([
             "name" => [
@@ -36,7 +36,8 @@ class ScheduleItemController extends Controller
             ],
         ]);
 
-        $scheduleId = Schedule::where('name', $scheduleName)
+        $scheduleId = Schedule::where('season', $season)
+            ->where('year', $year)
             ->where('user_id', Auth::id())
             ->value('id');
 
@@ -52,7 +53,7 @@ class ScheduleItemController extends Controller
             'service' => $request->service,
         ]);
 
-        return Redirect::route('my-schedules.edit', $scheduleName)->with('success', 'Anime added successfully to ' . $scheduleName);
+        return Redirect::route('my-schedules.edit', [$season, $year])->with('success', 'Anime added successfully to ' . $season . " " . $year);
     }
 
     public function update(Request $request, $id): RedirectResponse

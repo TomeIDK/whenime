@@ -4,17 +4,17 @@
     "'s") . ' Profile')
 
 @section('content')
-    <div class="flex flex-row h-full w-full grow p-8 justify-center gap-16">
+    <div class="flex flex-row justify-center w-full h-full gap-16 p-8 grow">
         <div class="flex flex-col gap-2">
             <div class="avatar">
-                <div class="w-96 rounded">
+                <div class="rounded w-96">
                     <img
                         src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('storage/profile_pictures/default-profile-picture.jpg') }}" />
                 </div>
             </div>
             @auth
                 @if ($isCurrentUser || Auth::user()->is_admin)
-                    <x-cta-nav-link route="{{ route('profile.edit', $user->username) }}" class="w-full self-center mt-3"
+                    <x-cta-nav-link route="{{ route('profile.edit', $user->username) }}" class="self-center w-full mt-3"
                         text="Edit Profile" />
                 @endif
             @endauth
@@ -46,13 +46,13 @@
             @if ($user->schedules)
                 <h3 class="text-xl font-bold">Schedules</h3>
                 @foreach ($user->schedules as $schedule)
-                    @if ($schedule->name === $currentSchedule->name)
-                        <p class="w-fit ml-4 underline text-primary hover:cursor-pointer">
-                            {{ $schedule->name }}
+                    @if ($schedule->season . " " . $schedule->year === $currentSchedule->season . " " . $currentSchedule->year)
+                        <p class="ml-4 underline w-fit text-primary hover:cursor-pointer">
+                            {{ $schedule->season . " " . $schedule->year }}
                         </p>
                     @else
-                        <a href="{{ route('profile-schedule.show',['username' => $user->username, 'scheduleName' => $schedule->name]) }}" class="w-fit text-discard ml-4 hover:underline hover:text-primary hover:cursor-pointer">
-                            {{ $schedule->name }}
+                        <a href="{{ route('profile-schedule.show',['username' => $user->username, 'season' => $schedule->season, 'year' => $schedule->year]) }}" class="ml-4 w-fit text-discard hover:underline hover:text-primary hover:cursor-pointer">
+                            {{ $schedule->season . " " . $schedule->year }}
                         </a>
                     @endif
                 @endforeach
@@ -72,12 +72,12 @@
                     @foreach ($uniqueDays as $day)
                         <div class="collapse collapse-plus">
                             <input type="checkbox" name="my-accordion-{{ $day }}" checked />
-                            <div class="collapse-title text-xl font-medium border-b">{{ $day }}</div>
-                            <div class="collapse-content mt-3 flex flex-col gap-3">
+                            <div class="text-xl font-medium border-b collapse-title">{{ $day }}</div>
+                            <div class="flex flex-col gap-3 mt-3 collapse-content">
                                 @if (isset($groupedItems[$day]))
                                     @foreach ($groupedItems[$day] as $time => $items)
                                         <div class="flex flex-col gap-2">
-                                            <p class="text-discard underline font-bold">{{ date('H:i', strtotime($time)) }}
+                                            <p class="font-bold underline text-discard">{{ date('H:i', strtotime($time)) }}
                                             </p>
                                             @foreach ($items as $item)
                                                 <x-schedule-item name="{{ $item->name }}"

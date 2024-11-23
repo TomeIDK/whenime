@@ -1,10 +1,10 @@
 @extends('layouts.base')
 
-@section('title', $schedule->name)
+@section('title', $schedule->season . " " . $schedule->year)
 
 @section('content')
     <div class="p-4">
-        <h1 class="my-16 text-6xl font-bold text-center">{{ $schedule->name }}</h1>
+        <h1 class="my-16 text-6xl font-bold text-center">{{ $schedule->season . " " . $schedule->year }}</h1>
 
         <div class="flex flex-col w-1/2 gap-4 m-auto mb-4">
             <div class="self-end">
@@ -91,11 +91,11 @@
                 <form method="dialog">
                     <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
                 </form>
-                <h3 class="text-2xl font-bold">Add anime to<br>{{ $schedule->name }}</h3>
+                <h3 class="text-2xl font-bold">Add anime to<br>{{ $schedule->season . " " . $schedule->year }}</h3>
                 <div class="flex justify-center gap-4 mt-2 modal-action">
 
                     {{-- Create Schedule Item --}}
-                    <form method="POST" action="{{ route('schedule-item.store', $schedule->name) }}"
+                    <form method="POST" action="{{ route('schedule-item.store', [$schedule->season, $schedule->year]) }}"
                         class="flex flex-col gap-6">
                         @csrf
                         <div>
