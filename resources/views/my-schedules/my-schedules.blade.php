@@ -11,7 +11,14 @@
                 <div class="transition-all duration-300 border card hover:border-primary hover:bg-blue-100 text-text">
                     <div class="gap-2 p-6 card-body">
                         <div class="flex items-center justify-between gap-1">
-                            <h2 class="card-title">{{ $schedule->season . ' ' . $schedule->year }}</h2>
+                            <div class="flex items-center gap-4">
+                                <h2 class="card-title">{{ $schedule->season . ' ' . $schedule->year }}</h2>
+                                @if ($schedule->status == "Airing")
+                                <div class="text-white badge bg-primary">{{ $schedule->status }}</div>
+                                    @else
+                                <div class="text-white badge bg-discard">{{ $schedule->status }}</div>
+                                @endif
+                            </div>
                             @if ($schedule->is_public)
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round"

@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use InvalidArgumentException;
+use Illuminate\Support\Collection;
 
 class SeasonService {
     public function getCurrentSeason() {
@@ -83,5 +85,70 @@ class SeasonService {
         $interval = $now->diffInDays($nextSeasonStart);
 
         return round($interval) > 30 ? -1 : round($interval);
+    }
+
+    // Check if season is ended, airing or upcoming
+    public function getSeasonStatus($season, $year) {
+        $currentSeason = $this->getCurrentSeason();
+        $currentYear = date('Y');
+        $status = "Airing";
+
+        if ($year < $currentYear) {
+            $status = "Ended";
+        }
+
+        if ($year > $currentYear) {
+            $status = "Upcoming";
+        }
+
+        if ($year == $currentYear && $this->compareSeasons($season, $currentSeason) == 0) {
+           $status = "Ended";
+        }
+
+        if ($year == $currentYear && $this->compareSeasons($season, $currentSeason) == 1) {
+           $status = "Upcoming";
+        }
+
+        return $status;
+    }
+
+    // Compares if $season1 comes before (0), after (1) or is the same (2) as $season2
+    public function compareSeasons($season1, $season2) {
+        $seasonOrder = [
+            "Winter" => 0,
+            "Spring" => 1,
+            "Summer" => 2,
+            "Fall" => 3,
+        ];
+
+        if (!isset($seasonOrder[$season1])){
+            throw new InvalidArgumentException("Invalid season provided.");
+        }
+
+        if ($seasonOrder[$season1] < $seasonOrder[$season2]) {
+            return 0;
+        } else if ($seasonOrder[$season1] > $seasonOrder[$season2]) {
+            return 1;
+        } else if  ($seasonOrder[$season1] == $seasonOrder[$season2]) {
+            return 2;
+        }
+    }
+
+    public function sortNewToOld($schedules) {
+        return $schedules->sortBy(function ($schedule) {
+            $seasonOrder = ['Winter', 'Spring', 'Summer', 'Fall'];
+            $seasonIndex = array_search($schedule->season, $seasonOrder);
+
+            return [$schedule->year, $seasonIndex];
+        });
+    }
+
+    public function sortOldToNew($schedules) {
+        return $schedules->sortByDesc(function ($schedule) {
+            $seasonOrder = ['Winter', 'Spring', 'Summer', 'Fall'];
+            $seasonIndex = array_search($schedule->season, $seasonOrder);
+
+            return [$schedule->year, $seasonIndex];
+        });
     }
 }

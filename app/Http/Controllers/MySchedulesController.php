@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Services\SeasonService;
 
@@ -26,7 +25,10 @@ class MySchedulesController extends Controller
 
         foreach ($user->schedules as $schedule) {
             $schedule->schedule_items_count = $schedule->scheduleItems->count();
+            $schedule->status = $this->seasonService->getSeasonStatus($schedule->season, $schedule->year);
         }
+
+        $user->schedules = $this->seasonService->sortOldToNew($user->schedules);
 
         $seasons = ["Winter", "Spring", "Summer", "Fall"];
         $currentSeason = $this->seasonService->getCurrentSeason();

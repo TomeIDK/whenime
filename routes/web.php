@@ -14,8 +14,6 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\OwnerOrAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
-// Public Routes
-
 // Home
 Route::get('/', function () {
     return view('home');

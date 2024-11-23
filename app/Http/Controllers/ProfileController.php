@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
+use App\Services\SeasonService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,13 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    protected $seasonService;
+
+    public function __construct(SeasonService $seasonService)
+    {
+        $this->seasonService = $seasonService;
+    }
+
     // Show user's profile
     public function show($username){
         $user = User::with(['schedules' => function ($query) {
@@ -21,7 +29,9 @@ class ProfileController extends Controller
 
         $isCurrentUser = Auth::check() && Auth::user()->username === $username;
 
-        $currentSchedule = $user->schedules->first();
+        $currentSchedule = $user->schedules->where('season', $this->seasonService->getCurrentSeason())->where('year', date('Y'))->first();
+
+        $user->schedules = $this->seasonService->sortOldToNew($user->schedules);
 
         $dayOrder = [
             'Monday',
