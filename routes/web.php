@@ -21,99 +21,147 @@ Route::get('/', function () {
     return view('home');
 })-> name("home");
 
+Route::get('/explore', [AnimeController::class, 'index'])->name('anime.index');
 
 // FAQ
-Route::get('/faq',  [FAQController::class, 'index'])->name('faq');
+Route::prefix('/faq')->group(function () {
+    Route::get('/',  [FAQController::class, 'index'])->name('faq');
+
+    // Admin
+    Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+        Route::get('/edit/{category}', [FAQController::class, 'edit'])->name('faq.edit');
+
+        Route::patch('/update/{category}', [FAQController::class, 'update'])->name('faq.update');
+        Route::patch('/update/question/{questionId}', [FAQController::class, 'updateQuestion'])->name('faq.updateQuestion');
+
+        Route::post('/category/store', [FAQController::class, 'storeCategory'])->name('faq.storeCategory');
+        Route::post('/question/store', [FAQController::class, 'storeQuestion'])->name('faq.storeQuestion');
+
+        Route::delete('/category/delete/{id}', [FAQController::class, 'destroyCategory'])->name('faq.destroyCategory');
+        Route::delete('/question/delete/{id}', [FAQController::class, 'destroyQuestion'])->name('faq.destroyQuestion');
+    });
+});
 
 // Contact 
-Route::get('/contact', [ContactFormController::class, 'create'])
-    ->name('contact');
+Route::prefix('/contact')->group(function () {
+    Route::get('/', [ContactFormController::class, 'create'])
+        ->name('contact');
 
-Route::post('/contact', [ContactFormController::class, 'store'])
-    ->middleware('throttle:5,10')
-    ->name('contact.store');
+    Route::post('/', [ContactFormController::class, 'store'])
+        ->middleware('throttle:5,10')
+        ->name('contact.store');
+});
 
 // Profile 
-Route::get('/profile/{username}', [ProfileController::class, 'show'])->name('profile');
-Route::get('/profile/{username}/schedules/{scheduleName}', [ProfileController::class, 'showSchedule'])->name('profile-schedule.show');
+Route::prefix('/profile/{username}')->group(function () {
+    Route::get('/', [ProfileController::class, 'show'])->name('profile');
+    Route::get('/schedules/{scheduleName}', [ProfileController::class, 'showSchedule'])->name('profile-schedule.show');
 
-Route::middleware(['auth', OwnerOrAdminMiddleware::class])->group(function () { // Only allow access if user is owner or an admin
-    Route::get('/profile/{username}/edit', [ProfileController::class, 'edit'])
-    ->name('profile.edit');
-    Route::patch('/profile/{username}', [ProfileController::class, 'update'])
-    ->name('profile.update');
+    // Auth, Owner or Admin
+    Route::middleware(['auth', OwnerOrAdminMiddleware::class])->group(function () {
+        Route::get('/edit', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+        Route::patch('/', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    });
 });
 
 // News 
-Route::get('/news', [NewsController::class, 'index'])-> name("news");
-Route::get('/news/latest', [NewsController::class, 'index'])->name('news.latest');
-Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
+Route::prefix('/news')->group(function () {
+    Route::get('/', [NewsController::class, 'index'])-> name("news");
+    Route::get('/latest', [NewsController::class, 'index'])->name('news.latest');
+
+    Route::prefix('/{id}')->group(function () {
+        Route::get('/', [NewsController::class, 'show'])->name('news.show');
+
+        // Admin
+        Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+            Route::get('/edit', [NewsController::class, 'edit'])->name('news.edit');
+
+            Route::patch('/', [NewsController::class, 'update'])->name('news.update');
+
+            Route::delete('/', [NewsController::class, 'destroy'])->name('news.destroy');
+        });
+    });
+});
 
 // My schedules
-Route::middleware(['auth'])->group(function () {
-    Route::get('/my-schedules', [MySchedulesController::class, 'index'])
-    ->name('my-schedules');
-    Route::get('/my-schedules/{scheduleName}', [MySchedulesController::class, 'edit'])
-    ->name('my-schedules.edit');
-    Route::patch('/my-schedules/{scheduleName}', [MySchedulesController::class, 'update'])
-    ->name('my-schedules.update');
-    Route::delete('/my-schedules/delete/{id}', [MySchedulesController::class, 'destroy'])
-    ->name('my-schedules.destroy');
-    Route::post('/my-schedules/store', [MySchedulesController::class, 'store'])
-    ->name('my-schedules.store');
-    Route::post('/schedule-item/{scheduleName}/add', [ScheduleItemController::class, 'store'])
-    ->name('schedule-item.store');
-    Route::patch('/schedule-item/{id}', [ScheduleItemController::class, 'update'])
-    ->name('schedule-item.update');
-    Route::delete('/schedule-item/delete/{id}', [ScheduleItemController::class, 'destroy'])
-    ->name('schedule-item.destroy');
+Route::prefix('/my-schedules')->group(function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/', [MySchedulesController::class, 'index'])
+        ->name('my-schedules');
+        Route::get('/{scheduleName}', [MySchedulesController::class, 'edit'])
+        ->name('my-schedules.edit');
+
+        Route::patch('/{scheduleName}', [MySchedulesController::class, 'update'])
+        ->name('my-schedules.update');
+
+        Route::post('/store', [MySchedulesController::class, 'store'])
+        ->name('my-schedules.store');
+
+        Route::delete('/delete/{id}', [MySchedulesController::class, 'destroy'])
+        ->name('my-schedules.destroy');
+    });
 });
 
+// Schedule Item
+Route::prefix('/schedule-item')->group(function () {
+    Route::middleware(['auth'])->group(function () {
+        Route::post('/{scheduleName}/add', [ScheduleItemController::class, 'store'])
+        ->name('schedule-item.store');
 
-// Admin Only Routes
-Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-    // FAQ
-    Route::get('/admin/faq',  [FAQController::class, 'indexAdmin'])->name('faq.admin');
-    Route::get('/faq/edit/{category}', [FAQController::class, 'edit'])->name('faq.edit');
-    Route::patch('/faq/update/{category}', [FAQController::class, 'update'])->name('faq.update');
-    Route::patch('/faq/update/question/{questionId}', [FAQController::class, 'updateQuestion'])->name('faq.updateQuestion');
-    Route::post('/faq/category/store', [FAQController::class, 'storeCategory'])->name('faq.storeCategory');
-    Route::post('/faq/question/store', [FAQController::class, 'storeQuestion'])->name('faq.storeQuestion');
-    Route::delete('/faq/category/delete/{id}', [FAQController::class, 'destroyCategory'])->name('faq.destroyCategory');
-    Route::delete('/faq/question/delete/{id}', [FAQController::class, 'destroyQuestion'])->name('faq.destroyQuestion');
+        Route::patch('/{id}', [ScheduleItemController::class, 'update'])
+        ->name('schedule-item.update');
 
-    // News
-    Route::get('/admin/news', [NewsController::class, 'indexAdmin'])->name('news.admin');
-    Route::get('/admin/news/create', [NewsController::class, 'create'])->name('news.create');
-    Route::post('/admin/news/store', [NewsController::class, 'store'])->name('news.store');
-    Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
-    Route::patch('/news/{id}', [NewsController::class, 'update'])->name('news.update');
-    Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
-
-    // Admin
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
-
-    // Users
-    Route::get('/admin/users', [UserController::class, 'index'])->name('admin-users');
-    Route::post('/admin/users', [UserController::class, 'store'])->name('admin-users.store');
-    Route::patch('/admin/users/{user}/toggle-admin', [UserController::class, 'toggleAdmin'])->name('admin-users.toggleAdmin');
-    Route::delete('/admin/users/delete/{id}', [UserController::class, 'destroy'])->name('admin-users.destroy');
-
-    // Contact
-    Route::get('/admin/forms/unread', [ContactFormController::class, 'indexUnread'])->name('contact.unread');
-    Route::get('/admin/forms/read', [ContactFormController::class, 'indexRead'])->name('contact.read');
-    Route::get('/admin/forms/solved', [ContactFormController::class, 'indexSolved'])->name('contact.solved');
-    Route::get('/admin/forms/view/{id}', [ContactFormController::class, 'show'])->name('contact.show');
-    Route::patch('/admin/forms/update/{id}', [ContactFormController::class, 'toggleRead'])->name('contact.toggleRead');
-    Route::patch('/admin/forms/update-status/{id}', [ContactFormController::class, 'toggleSolved'])->name('contact.toggleSolved');
-    Route::delete('/admin/forms/delete/{id}', [ContactFormController::class, 'destroy'])->name('contact.destroy');
+        Route::delete('/delete/{id}', [ScheduleItemController::class, 'destroy'])
+        ->name('schedule-item.destroy');
+    });
 });
 
-Route::get('/explore', [AnimeController::class, 'index'])->name('anime.index');
+// Admin
+Route::prefix('/admin')->group(function () {
+    Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+        Route::get('/faq',  [FAQController::class, 'indexAdmin'])->name('faq.admin');
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
+
+        // News
+        Route::prefix('/news')->group(function () {
+            Route::get('/', [NewsController::class, 'indexAdmin'])->name('news.admin');
+            Route::get('/create', [NewsController::class, 'create'])->name('news.create');
+            Route::post('/store', [NewsController::class, 'store'])->name('news.store');
+        });
+
+
+        // Users
+        Route::prefix('/users')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('admin-users');
+            Route::post('/', [UserController::class, 'store'])->name('admin-users.store');
+            Route::patch('/{user}/toggle-admin', [UserController::class, 'toggleAdmin'])->name('admin-users.toggleAdmin');
+            Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('admin-users.destroy');
+        });
+
+        // Contact
+        Route::prefix('/forms')->group(function () {
+            Route::get('/unread', [ContactFormController::class, 'indexUnread'])->name('contact.unread');
+            Route::get('/read', [ContactFormController::class, 'indexRead'])->name('contact.read');
+            Route::get('/solved', [ContactFormController::class, 'indexSolved'])->name('contact.solved');
+            Route::get('/view/{id}', [ContactFormController::class, 'show'])->name('contact.show');
+
+            Route::patch('/update/{id}', [ContactFormController::class, 'toggleRead'])->name('contact.toggleRead');
+            Route::patch('/update-status/{id}', [ContactFormController::class, 'toggleSolved'])->name('contact.toggleSolved');
+
+            Route::delete('/delete/{id}', [ContactFormController::class, 'destroy'])->name('contact.destroy');
+        });
+    });
+});
+
 
 // Jikan API
-Route::middleware(['auth', 'throttle:60,1', 'throttle:3,1'])->group(function () {
-    Route::get('/anime/search', [JikanController::class, 'search'])->name('anime.search');
+Route::prefix('anime')->group(function () {
+    Route::middleware(['auth', 'throttle:60,1'])->group(function () {
+        Route::get('/{id}', [AnimeController::class, 'show'])->name('anime.show');
+    });
 });
 
 require __DIR__.'/auth.php';

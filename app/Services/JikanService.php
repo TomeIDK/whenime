@@ -32,6 +32,10 @@ class JikanService {
         }
     }
 
+    public function getAnimeById($id) {
+        return $this->makeRequest('anime/' . $id);
+    }
+
     // Search for anime with given query, optionally filter by airing status
     public function searchAnimeByName($query, $isAiringOnly = false) {
         $params = [
@@ -87,20 +91,5 @@ class JikanService {
             'page' => $page,
             'limit' => $limitPerPage,
         ]);
-    }
-
-    // Get anime details by id
-    public function getAnimeDetails($id) {
-        return $this->makeRequest("anime/" . $id);
-    }
-
-    // Get anime by genre
-    public function getAnimeByGenre($genre) {
-        return $this->makeRequest('anime', ['genre' => $genre]);
-    }
-
-    // TODO: get anime list by user id
-    public function getUserAnimeList($id) {
-        
     }
 }
