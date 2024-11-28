@@ -92,4 +92,8 @@ class JikanService {
             'limit' => $limitPerPage,
         ]);
     }
+
+    public function getAnimeServices($id) {
+        return $this->makeRequest("anime/" . $id . "/streaming");
+    }
 }

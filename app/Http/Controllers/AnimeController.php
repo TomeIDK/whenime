@@ -36,6 +36,8 @@ class AnimeController extends Controller
 
     public function show($id) {
         $anime = $this->jikanService->getAnimeById($id)['data'];
-        return view('anime.show', compact('anime'));
+        $services = $this->jikanService->getAnimeServices($id)['data'];
+        $supportedServices = ['Crunchyroll', 'Netflix', 'Disney+', 'Funimation', 'HIDIVE'];
+        return view('anime.show', compact('anime', 'services', 'supportedServices'));
     }
 }
