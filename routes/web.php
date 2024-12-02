@@ -10,6 +10,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MySchedulesController;
 use App\Http\Controllers\ScheduleItemController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\OwnerOrAdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -161,5 +162,8 @@ Route::prefix('anime')->group(function () {
         Route::get('/{id}', [AnimeController::class, 'show'])->name('anime.show');
     });
 });
+
+// Settings
+Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
 
 require __DIR__.'/auth.php';

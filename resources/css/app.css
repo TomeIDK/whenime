@@ -26,6 +26,13 @@
     overflow: visible !important;
 }
 
+.settings-active {
+    @apply text-white rounded bg-primary
+}
 
+.toggle {
+    background-color: #6b7280; /* Set the color when toggled OFF */
+    color: #6B7280; /* Adjust the color of the handle or icon when toggled OFF */
+}
 
 

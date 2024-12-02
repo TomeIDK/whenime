@@ -1,5 +1,5 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
+import defaultTheme from "tailwindcss/defaultTheme";
+import forms from "@tailwindcss/forms";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -43,6 +43,7 @@ export default {
                     DEFAULT: "#6B7280",
                     hover: "#4B5563",
                 },
+                muted: "#71717A",
             },
         },
     },
@@ -51,5 +52,12 @@ export default {
 
     daisyui: {
         darkTheme: false,
+        themes: [
+            {
+                custom: {
+                    primary: "#4A90E2",
+                },
+            },
+        ],
     },
 };
