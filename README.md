@@ -80,13 +80,22 @@ XSS, CSRF, Cors Explanation: https://chatgpt.com/share/673fa303-4d44-800b-8bf5-7
    'defaults' => [
     'timezone' => 'UTC',
     'time_format' => '24h',
-    'new_setting' => 'default_value',  // New setting added
+    'new_setting' => 'default_value',
     ],  
     ```
 2. Run `CreateUserSettings.php` Seeder  
     ```
    php artisan db:seed --class=CreateUserSettings
     ```
+3. Update `Settings.php` Model
+   ```
+   protected $fillable = [
+       'user_id', 
+       'timezone', 
+       'time_format',
+       'new_setting',
+    ];
+   ```
 4. If needed, create a database migration
    ```
    php artisan make:migration add_{new_setting}_to_settings_table
