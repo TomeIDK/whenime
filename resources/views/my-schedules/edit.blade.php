@@ -1,10 +1,10 @@
 @extends('layouts.base')
 
-@section('title', $schedule->season . " " . $schedule->year)
+@section('title', $schedule->season . ' ' . $schedule->year)
 
 @section('content')
     <div class="p-4">
-        <h1 class="my-16 text-6xl font-bold text-center">{{ $schedule->season . " " . $schedule->year }}</h1>
+        <h1 class="my-16 text-6xl font-bold text-center">{{ $schedule->season . ' ' . $schedule->year }}</h1>
 
         <div class="flex flex-col w-1/2 gap-4 m-auto mb-4">
             <div class="self-end">
@@ -50,7 +50,7 @@
                                                 {{-- Update Item --}}
                                                 <button
                                                     class="flex flex-col items-center gap-1 bg-transparent border-none shadow-none btn btn-sm hover:bg-primary"
-                                                    onclick="showUpdateModal({{ $item->id }}, '{{ $item->name }}', '{{ $item->day }}', '{{ $item->time }}', '{{ $item->service }}')">
+                                                    onclick="showUpdateModal({{ $item->id }}, '{{ $item->name }}', '{{ $item->day }}', '{{ date('H:i', strtotime($item->time)) }}', '{{ $item->service }}')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">
@@ -91,7 +91,7 @@
                 <form method="dialog">
                     <button class="absolute btn btn-sm btn-circle btn-ghost right-2 top-2">✕</button>
                 </form>
-                <h3 class="text-2xl font-bold">Add anime to<br>{{ $schedule->season . " " . $schedule->year }}</h3>
+                <h3 class="text-2xl font-bold">Add anime to<br>{{ $schedule->season . ' ' . $schedule->year }}</h3>
                 <div class="flex justify-center gap-4 mt-2 modal-action">
 
                     {{-- Create Schedule Item --}}
@@ -190,8 +190,11 @@
                             </div>
                             <label class="flex items-center gap-2 input input-bordered">
                                 <input type="text" name="name" class="border-none grow focus:ring-transparent"
-                                    placeholder="Anime" required autofocus />
+                                    placeholder="Anime" required />
                             </label>
+                            @error('name')
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
+                            @enderror
 
                             <div class="label">
                                 <span class="label-text">Day</span>
@@ -206,6 +209,9 @@
                                 <option value="Saturday">Saturday</option>
                                 <option value="Sunday">Sunday</option>
                             </select>
+                            @error('day')
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
+                            @enderror
 
                             <div class="label">
                                 <span class="label-text">Time</span>
@@ -214,6 +220,9 @@
                                 <input type="time" name="time" class="border-none grow focus:ring-transparent"
                                     required />
                             </label>
+                            @error('time')
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
+                            @enderror
 
                             <div class="label">
                                 <span class="label-text">Service</span>
@@ -227,7 +236,11 @@
                                 <option value="Crunchyroll">Crunchyroll</option>
                                 <option value="Other">Other</option>
                             </select>
+                            @error('service')
+                                <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
+                            @enderror
                         </div>
+
 
                         <button type="submit"
                             class="text-white border-none outline-none btn btn-sm bg-success hover:bg-success-hover">Update

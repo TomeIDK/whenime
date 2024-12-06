@@ -1,25 +1,32 @@
-<form action="" class="flex flex-col gap-5">
+<form action="{{ route('settings.update') }}" method="POST" class="flex flex-col gap-5">
+    @csrf
+    @method('PATCH')
     <div class="flex flex-col gap-2">
         <span class="label-text">Theme</span>
-        <select class="w-full select select-bordered">
-            <option selected>Light</option>
-            <option>Dark</option>
+        <select name="theme" class="w-full select select-bordered">
+            <option value="light" {{ $settings->theme == 'light' ? 'selected' : '' }}>Light</option>
+            <option value="dark" {{ $settings->theme == 'dark' ? 'selected' : '' }}>Dark</option>
         </select>
     </div>
 
     <div class="flex flex-col gap-2">
         <span class="label-text">Timezone</span>
-        <select class="w-full select select-bordered">
-            <option selected>UTC</option>
-            <option>GMT+1</option>
+        <select name="timezone" class="w-full select select-bordered">
+            @foreach ($timezones as $key => $timezone)
+                @if ($key == $settings->timezone)
+                    <option value="{{ $key }}" selected>{{ $key }} ({{ $timezone }})</option>
+                @else
+                    <option value="{{ $key }}">{{ $key }} ({{ $timezone }})</option>
+                @endif
+            @endforeach
         </select>
     </div>
 
     <div class="flex flex-col gap-2">
         <span class="label-text">Time Format</span>
-        <select class="w-full select select-bordered">
-            <option selected>24-hour</option>
-            <option>12-hour (AM/PM)</option>
+        <select name="time_format" class="w-full select select-bordered">
+            <option value="24h" {{ $settings->time_format == '24h' ? 'selected' : '' }}>24-hour</option>
+            <option value="12h" {{ $settings->time_format == '12h' ? 'selected' : '' }}>12-hour (AM/PM)</option>
         </select>
     </div>
 
@@ -38,4 +45,18 @@
         </div>
         <input type="checkbox" class="toggle toggle-primary" />
     </div>
+
+    <button type="submit"
+        class="self-end px-6 text-white border-none outline-none btn bg-primary hover:bg-primary-hover-dark w-fit btn-sm">Save
+    </button>
+
+    @if ($errors->any())
+    <div class="alert alert-error">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 </form>

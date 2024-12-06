@@ -92,14 +92,14 @@ class ScheduleItemController extends Controller
             ],
         ]);
 
-        $scheduleItem->name = $request->input('name');
-        $scheduleItem->day = $request->input('day');
-        $scheduleItem->time = $request->input('time');
-        $scheduleItem->service = $request->input('service');
+        $scheduleItem->name = $request->name;
+        $scheduleItem->day = $request->day;
+        $scheduleItem->time = $request->time;
+        $scheduleItem->service = $request->service;
 
         $scheduleItem->save();
 
-        return Redirect::route('my-schedules.edit', $ownershipCheck->name)->with('success', 'Anime updated successfully!');
+        return Redirect::route('my-schedules.edit', [$ownershipCheck->season, $ownershipCheck->year])->with('success', 'Anime updated successfully!');
     }
 
     public function destroy($id): RedirectResponse 
@@ -118,7 +118,7 @@ class ScheduleItemController extends Controller
 
         $scheduleItem->delete();
 
-        return Redirect::route('my-schedules.edit', $ownershipCheck->name)->with('success', 'Item deleted successfully!');
+        return Redirect::route('my-schedules.edit', [$ownershipCheck->season, $ownershipCheck->year])->with('success', 'Item deleted successfully!');
     }
 
     // Checks if user owns the schedule the item belongs to or is an admin

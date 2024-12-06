@@ -18,7 +18,7 @@ class UserController extends Controller
         return view('admin.users', compact('users'));
     }
 
-        public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $reservedWords = ['admin', 'user', 'support'];
         // Validate user input

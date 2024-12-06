@@ -13,14 +13,14 @@
 @include('components.menu')
 
 
-<body class="bg-white flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bg-white">
     {{-- Toast Notifications --}}
 
     {{-- Success --}}
     @if (session('success'))
-        <div id="toast" class="toast toast-end flex">
-            <div class="alert">
-                <span class="flex justify-center items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg"
+        <div id="toast" class="flex toast toast-end">
+            <div class="bg-white alert">
+                <span class="flex items-center justify-center gap-2"><svg xmlns="http://www.w3.org/2000/svg"
                         width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
@@ -33,9 +33,9 @@
 
     {{-- Info --}}
     @elseif (session('status'))
-        <div id="toast" class="toast toast-end flex">
-            <div class="alert">
-                <span class="flex justify-center items-center gap-2">
+        <div id="toast" class="flex toast toast-end">
+            <div class="bg-white alert">
+                <span class="flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="#4A90E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -49,9 +49,9 @@
 
     {{-- Warning --}}
     @elseif (session('warning'))
-        <div id="toast" class="toast toast-end flex">
-            <div class="alert">
-                <span class="flex justify-center items-center gap-2">
+        <div id="toast" class="flex toast toast-end">
+            <div class="bg-white alert">
+                <span class="flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="#FFA500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path
@@ -67,9 +67,9 @@
 
     {{-- Error --}}
     @elseif (session('error'))
-        <div id="toast" class="toast toast-end flex">
-            <div class="alert">
-                <span class="flex justify-center items-center gap-2">
+        <div id="toast" class="flex toast toast-end">
+            <div class="bg-white alert">
+                <span class="flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>

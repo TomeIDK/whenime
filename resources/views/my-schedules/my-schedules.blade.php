@@ -19,24 +19,6 @@
                                 <div class="text-white badge bg-discard">{{ $schedule->status }}</div>
                                 @endif
                             </div>
-                            @if ($schedule->is_public)
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                </svg>
-                            @else
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="#333333" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" data-id="8">
-                                    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
-                                    <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68">
-                                    </path>
-                                    <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
-                                    <line x1="2" x2="22" y1="2" y2="22"></line>
-                                </svg>
-                            @endif
                         </div>
                         <small>{{ $schedule->schedule_items_count }} anime</small>
                         <div class="justify-between mt-4 card-actions">
@@ -126,13 +108,6 @@
                             @error('year')
                                 <span class="mt-2 text-red-500 label-text-alt">{{ $message }}</span>
                             @enderror
-                            <div>
-                                <label class="flex flex-row justify-start gap-1 cursor-pointer label">
-                                    <input type="checkbox" name="is_public"
-                                        class="justify-start rounded checkbox checkbox-xs" value="1" checked />
-                                    <span class="label-text">Public</span>
-                                </label>
-                            </div>
                             <button type="submit"
                                 class="text-white border-none outline-none btn btn-sm bg-success hover:bg-success-hover">Create
                                 schedule</button>

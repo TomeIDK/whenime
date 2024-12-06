@@ -49,9 +49,6 @@ class MySchedulesController extends Controller
                 'digits:4',
                 'min:' . (date("Y") - 1),
                 'max:' . (date("Y") + 1),
-            ],
-            'is_public' => [
-                'boolean'
             ]
         ]);
 
@@ -72,7 +69,6 @@ class MySchedulesController extends Controller
         $schedule->user_id = Auth::user()->id;
         $schedule->season = $request->season;
         $schedule->year = $request->year;
-        $schedule->is_public = $request->has('is_public');
 
         $schedule->save();
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\FAQController;
 use App\Http\Controllers\JikanController;
 use App\Http\Controllers\AnimeController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MySchedulesController;
@@ -164,6 +165,12 @@ Route::prefix('anime')->group(function () {
 });
 
 // Settings
-Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
+Route::prefix('/settings')->group(function () {
+    Route::get('/', [SettingsController::class, 'index'])->name('settings');
+    Route::patch('/update', [SettingsController::class, 'update'])->name('settings.update');
+    Route::get('/change-password', [PasswordController::class, 'edit'])->name('settings.change-password');
+    Route::patch('/change-password/change', [PasswordController::class, 'change'])->name('settings.change-password.change');
+
+});
 
 require __DIR__.'/auth.php';

@@ -11,10 +11,7 @@ class Schedule extends Model
 
     protected $table = "schedules";
 
-    protected $fillable = [
-        "name",
-        "is_public"
-    ];
+    protected $fillable = [];
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
