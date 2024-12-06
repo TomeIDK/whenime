@@ -71,6 +71,28 @@ Jikan Setup: https://chatgpt.com/share/673dd63e-d798-800b-b461-3b882ec0c341
 XSS, CSRF, Cors Explanation: https://chatgpt.com/share/673fa303-4d44-800b-8bf5-7d8fc91b1d05
 
 
+
+## Documentation
+
+### How to add a new setting
+1. Update `config/settings.php` by adding the new setting to the `defaults` array
+   ```  
+   'defaults' => [
+    'timezone' => 'UTC',
+    'time_format' => '24h',
+    'new_setting' => 'default_value',  // New setting added
+    ],  
+    ```
+2. Run `CreateUserSettings.php` Seeder  
+    ```
+   php artisan db:seed --class=CreateUserSettings
+    ```
+4. If needed, create a database migration
+   ```
+   php artisan make:migration add_{new_setting}_to_settings_table
+   php artisan migrate
+   ```
+
 ## Checklist
 
 ### Inhoud
