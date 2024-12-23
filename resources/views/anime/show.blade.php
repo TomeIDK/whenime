@@ -43,7 +43,7 @@
                         <p class="text-sm">{{ date('M j, Y', strtotime($anime['aired']['from'])) }} to
                             {{ $anime['aired']['to'] ? date('M j, Y', strtotime($anime['aired']['to'])) : 'Unknown' }}</p>
                     </div>
-                    
+
                     <div class="flex flex-col mt-2">
                         <h4 class="text-lg font-bold">Synopsis</h4>
                         <p class="max-w-[120ch] text-sm">{{ $anime['synopsis'] }}</p>
@@ -77,14 +77,19 @@
                         </div>
                     </div>
 
-                    <button class="mt-4 font-bold text-white border-none btn bg-primary hover:bg-primary-hover-dark w-fit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                            fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="16"></line>
-                            <line x1="8" y1="12" x2="16" y2="12"></line>
-                        </svg>
-                        Add to {{ ucfirst($anime['season']) }} {{ $anime['year'] }} Schedule</button>
+                    <form method="POST" action="{{ route('anime.store', $anime['mal_id']) }}">
+                        @csrf
+                        <button type="submit"
+                            class="mt-4 font-bold text-white border-none btn bg-primary hover:bg-primary-hover-dark w-fit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                            Add to {{ ucfirst($anime['season']) }} {{ $anime['year'] }} Schedule</button>
+                    </form>
                 </div>
             </div>
         </div>

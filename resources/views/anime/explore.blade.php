@@ -24,7 +24,8 @@
                             {{-- Title --}}
                             @foreach ($anime['titles'] as $title)
                                 @if ($title['type'] == 'English')
-                                    <a href="{{ route('anime.show', $anime['mal_id']) }}" class="hover:underline hover:text-primary">
+                                    <a href="{{ route('anime.show', $anime['mal_id']) }}"
+                                        class="hover:underline hover:text-primary">
                                         <h2 class="mb-2 font-medium">{{ $title['title'] }}</h2>
                                     </a>
                                 @endif
@@ -68,7 +69,11 @@
                                     </div>
                                 @endif
                             </div>
-                            <x-cta-button class="self-end mt-auto btn-sm" text="Want to Watch" />
+                            <form method="POST" action="{{ route('anime.store', $anime['mal_id']) }}" class="self-end mt-auto">
+                                @csrf
+                                <x-cta-button class="btn-sm"
+                                    text="Add to {{ strtoupper($anime['season'][0]) }}{{ substr($anime['season'], 1) }} {{ $anime['year'] }}" />
+                            </form>
                         </div>
 
                     </div>
@@ -87,7 +92,8 @@
 
                         <div class="flex flex-col pl-4 grow">
                             {{-- Title --}}
-                            <a href="{{ route('anime.show', $anime['mal_id']) }}" class="hover:underline hover:text-primary">
+                            <a href="{{ route('anime.show', $anime['mal_id']) }}"
+                                class="hover:underline hover:text-primary">
                                 <h2 class="mb-2 font-medium">
                                     {{ collect($anime['titles'])->firstWhere('type', 'English')['title'] ??
                                         collect($anime['titles'])->firstWhere('type', 'Default')['title'] }}
@@ -136,7 +142,12 @@
                                 </svg>
                                 <p>{{ number_format($anime['members']) }} Members</p>
                             </div>
-                            <x-cta-button class="self-end mt-auto btn-sm" text="Want to Watch" />
+                            <form method="POST" action="{{ route('anime.store', $anime['mal_id']) }}"
+                                class="self-end mt-auto">
+                                @csrf
+                                <x-cta-button class="btn-sm"
+                                    text="Add to {{ strtoupper($anime['season'][0]) }}{{ substr($anime['season'], 1) }} {{ $anime['year'] }}" />
+                            </form>
                         </div>
                     </div>
                 @endforeach

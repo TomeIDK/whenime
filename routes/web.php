@@ -161,6 +161,7 @@ Route::prefix('/admin')->group(function () {
 Route::prefix('anime')->group(function () {
     Route::middleware(['auth', 'throttle:60,1'])->group(function () {
         Route::get('/{id}', [AnimeController::class, 'show'])->name('anime.show');
+        Route::post('/add/{id}', [AnimeController::class, 'store'])->name('anime.store');
     });
 });
 
