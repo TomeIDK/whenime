@@ -40,7 +40,7 @@
                         @if (isset($groupedItems[$day]))
                             @foreach ($groupedItems[$day] as $time => $items)
                                 <div class="flex flex-col gap-2">
-                                    <p class="font-bold underline text-discard">{{ date('H:i', strtotime($time)) }}
+                                    <p class="font-bold underline text-discard">{{ format_user_time(date('H:i', strtotime($time)))['time'] }}
                                     </p>
                                     @foreach ($items as $item)
                                         <div class="flex justify-between hover:underline">

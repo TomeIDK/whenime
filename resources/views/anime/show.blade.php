@@ -55,7 +55,12 @@
                         </div>
                         <div>
                             <h4 class="mt-4 text-lg font-bold">Broadcast</h4>
-                            <p>{{ $anime['broadcast']['string'] }}</p>
+                            <p>{{ $anime['broadcast']['string'] !== 'Unknown'
+                                ? format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['day'] .
+                                    's at ' .
+                                    format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['time']
+                                : 'TBA' }}
+                            </p>
                         </div>
                         <div>
                             <h4 class="mt-4 text-lg font-bold">Available on</h4>

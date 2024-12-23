@@ -39,7 +39,11 @@
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
-                                    <p>{{ $anime['broadcast']['string'] }}</p>
+                                    <p>{{ $anime['broadcast']['string'] !== 'Unknown' 
+                                    ? format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['day'] 
+                                    . 's at ' 
+                                    . format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['time'] : 'TBA' }}
+                                    </p>
                                 </div>
                             @endif
 
@@ -69,7 +73,8 @@
                                     </div>
                                 @endif
                             </div>
-                            <form method="POST" action="{{ route('anime.store', $anime['mal_id']) }}" class="self-end mt-auto">
+                            <form method="POST" action="{{ route('anime.store', $anime['mal_id']) }}"
+                                class="self-end mt-auto">
                                 @csrf
                                 <x-cta-button class="btn-sm"
                                     text="Add to {{ strtoupper($anime['season'][0]) }}{{ substr($anime['season'], 1) }} {{ $anime['year'] }}" />
@@ -125,7 +130,10 @@
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
-                                    <p>{{ $anime['broadcast']['string'] !== 'Unknown' ? $anime['broadcast']['string'] : 'TBA' }}
+                                    <p>{{ $anime['broadcast']['string'] !== 'Unknown' 
+                                    ? format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['day'] 
+                                    . 's at ' 
+                                    . format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['time'] : 'TBA' }}
                                     </p>
                                 </div>
                             @endif
