@@ -8,10 +8,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Services\TimezoneService;
 
 class ScheduleItemController extends Controller
 {
+    protected $timezoneService;
+
+        public function __construct(TimezoneService $timezoneService)
+    {
+        $this->timezoneService = $timezoneService;
+    }
+
     public function store(Request $request, $season, $year): RedirectResponse
     {
         $request->validate([
@@ -45,11 +52,15 @@ class ScheduleItemController extends Controller
             return Redirect::route('my-schedules')->with('error', 'Could not find selected schedule');
         }
 
+        $timezone = $this->timezoneService->getIanaTimezone(Auth::user()->settings->timezone);
+        $convertedAiring = $this->timezoneService->convertToUTC($request->time, $request->day, $timezone);
+
+
         ScheduleItem::create([
             'schedule_id' => $scheduleId,
             'name' => $request->name,
-            'day' => $request->day,
-            'time' => $request->time,
+            'day' => $convertedAiring->format('l'),
+            'time' => $convertedAiring->format('H:i:s'),
             'service' => $request->service,
         ]);
 
@@ -92,9 +103,12 @@ class ScheduleItemController extends Controller
             ],
         ]);
 
+        $timezone = $this->timezoneService->getIanaTimezone(Auth::user()->settings->timezone);
+        $convertedAiring = $this->timezoneService->convertToUTC($request->time, $request->day, $timezone);
+
         $scheduleItem->name = $request->name;
-        $scheduleItem->day = $request->day;
-        $scheduleItem->time = $request->time;
+        $scheduleItem->day = $convertedAiring->format('l');
+        $scheduleItem->time = $convertedAiring->format('H:i:s');
         $scheduleItem->service = $request->service;
 
         $scheduleItem->save();

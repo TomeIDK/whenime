@@ -40,9 +40,9 @@
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
                                     <p>{{ $anime['broadcast']['string'] !== 'Unknown' 
-                                    ? format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['day'] 
+                                    ? format_user_time_from_jst($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['day'] 
                                     . 's at ' 
-                                    . format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['time'] : 'TBA' }}
+                                    . format_user_time_from_jst($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['time'] : 'TBA' }}
                                     </p>
                                 </div>
                             @endif
@@ -131,9 +131,9 @@
                                         <polyline points="12 6 12 12 16 14"></polyline>
                                     </svg>
                                     <p>{{ $anime['broadcast']['string'] !== 'Unknown' 
-                                    ? format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['day'] 
+                                    ? format_user_time_from_jst($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['day'] 
                                     . 's at ' 
-                                    . format_user_time($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['time'] : 'TBA' }}
+                                    . format_user_time_from_jst($anime['broadcast']['time'], substr($anime['broadcast']['day'], 0, -1))['time'] : 'TBA' }}
                                     </p>
                                 </div>
                             @endif

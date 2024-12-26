@@ -40,7 +40,7 @@
                         @if (isset($groupedItems[$day]))
                             @foreach ($groupedItems[$day] as $time => $items)
                                 <div class="flex flex-col gap-2">
-                                    <p class="font-bold underline text-discard">{{ format_user_time(date('H:i', strtotime($time)))['time'] }}
+                                    <p class="font-bold underline text-discard">{{ $time }}
                                     </p>
                                     @foreach ($items as $item)
                                         <div class="flex justify-between hover:underline">
@@ -50,7 +50,7 @@
                                                 {{-- Update Item --}}
                                                 <button
                                                     class="flex flex-col items-center gap-1 bg-transparent border-none shadow-none btn btn-sm hover:bg-primary"
-                                                    onclick="showUpdateModal({{ $item->id }}, '{{ $item->name }}', '{{ $item->day }}', '{{ date('H:i', strtotime($item->time)) }}', '{{ $item->service }}')">
+                                                    onclick="showUpdateModal({{ $item->id }}, '{{ $item->name }}', '{{ format_user_time_from_utc($item->time, $item->day)['day'] }}', '{{ format_user_time_from_utc($item->time)['time'] }}', '{{ $item->service }}')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
                                                         stroke-linecap="round" stroke-linejoin="round">

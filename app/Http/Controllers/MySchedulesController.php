@@ -102,8 +102,16 @@ class MySchedulesController extends Controller
         'Other',
         ];
 
+        // Group items with the same day and time slot
+        $groupedItems = [];
+        foreach ($schedule->scheduleItems as $item) {
+            $convertedDateTime = format_user_time_from_utc(date('H:i', strtotime($item->time)), $item->day);
+
+            $groupedItems[$convertedDateTime['day']][$convertedDateTime['time']][] = $item;
+        }
+
         // Sort days and services in a custom order
-        $uniqueDays = $schedule->scheduleItems->pluck('day')->unique()->sortBy(function($day) use ($dayOrder) {
+        $uniqueDays = collect(array_keys($groupedItems))->sortBy(function($day) use ($dayOrder) {
             return array_search($day, $dayOrder);
         });
 
@@ -111,11 +119,8 @@ class MySchedulesController extends Controller
             return array_search($service, $serviceOrder);
         });
 
-        // Group items with the same day and time slot
-        $groupedItems = [];
-        foreach ($schedule->scheduleItems as $item) {
-            $groupedItems[$item->day][$item->time][] = $item;
-        }
+
+
         return view('my-schedules.edit', compact('schedule', 'uniqueDays', 'uniqueServices', 'groupedItems'));
     }
 
