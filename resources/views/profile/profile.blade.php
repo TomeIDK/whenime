@@ -78,7 +78,7 @@
                                 @if (isset($groupedItems[$day]))
                                     @foreach ($groupedItems[$day] as $time => $items)
                                         <div class="flex flex-col gap-2">
-                                            <p class="font-bold underline text-discard">{{ format_user_time_from_jst(date('H:i', strtotime($time)))['time'] }}
+                                            <p class="font-bold underline text-discard">{{ $time }}
                                             </p>
                                             @foreach ($items as $item)
                                                 <x-schedule-item name="{{ $item->name }}"
