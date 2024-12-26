@@ -70,7 +70,8 @@ Manage save button state based on original data: https://chatgpt.com/share/673db
 Jikan Setup: https://chatgpt.com/share/673dd63e-d798-800b-b461-3b882ec0c341  
 Auto-add schedule item: https://chatgpt.com/share/67699eec-b664-800b-b8cd-679335d08fc4  
 Time settings helper: https://chatgpt.com/share/6769a636-cb00-800b-a3a8-e341f0ff88e8  
-XSS, CSRF, Cors Explanation: https://chatgpt.com/share/673fa303-4d44-800b-8bf5-7d8fc91b1d05
+XSS, CSRF, Cors Explanation: https://chatgpt.com/share/673fa303-4d44-800b-8bf5-7d8fc91b1d05  
+Jikan handler + retryer: https://chatgpt.com/share/676d9631-353c-800b-9344-d4e68fa6850a  
 
 
 
