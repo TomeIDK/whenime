@@ -45,7 +45,7 @@
                                     @foreach ($items as $item)
                                         <div class="flex justify-between hover:underline">
                                             {{-- Item --}}
-                                            <x-schedule-item name="{{ $item->name }}" service="{{ $item->service }}" />
+                                            <x-schedule-item :name="$item->name" :service="$item->service" :animeid="$item->anime_id" />
                                             <div class="flex gap-1">
                                                 {{-- Update Item --}}
                                                 <button

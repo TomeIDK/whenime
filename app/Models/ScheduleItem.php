@@ -12,6 +12,7 @@ class ScheduleItem extends Model
     protected $table = "schedule_items";
 
     protected $fillable = [
+        "anime_id",
         "schedule_id",
         "name",
         "day",

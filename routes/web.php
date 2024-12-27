@@ -7,6 +7,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\JikanController;
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\EmailChangeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MySchedulesController;
@@ -171,7 +172,8 @@ Route::prefix('/settings')->group(function () {
     Route::patch('/update', [SettingsController::class, 'update'])->name('settings.update');
     Route::get('/change-password', [PasswordController::class, 'edit'])->name('settings.change-password');
     Route::patch('/change-password/change', [PasswordController::class, 'change'])->name('settings.change-password.change');
-
+    Route::get('/change-email', [EmailChangeController::class, 'edit'])->name('settings.change-email');
+    Route::post('/change-email/change', [EmailChangeController::class, 'store'])->name('settings.change-email.change');
 });
 
 require __DIR__.'/auth.php';

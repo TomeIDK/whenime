@@ -47,9 +47,9 @@
                 <h3 class="text-xl font-bold">Schedules</h3>
                 @foreach ($user->schedules as $schedule)
                     @if ($schedule->season . ' ' . $schedule->year === $currentSchedule->season . ' ' . $currentSchedule->year)
-                            <p class="ml-4 underline w-fit text-primary hover:cursor-pointer">
-                                {{ $schedule->season . ' ' . $schedule->year }}
-                            </p>
+                        <p class="ml-4 underline w-fit text-primary hover:cursor-pointer">
+                            {{ $schedule->season . ' ' . $schedule->year }}
+                        </p>
                     @else
                         <a href="{{ route('profile-schedule.show', ['username' => $user->username, 'season' => $schedule->season, 'year' => $schedule->year]) }}"
                             class="ml-4 w-fit text-discard hover:underline hover:text-primary hover:cursor-pointer">
@@ -81,8 +81,7 @@
                                             <p class="font-bold underline text-discard">{{ $time }}
                                             </p>
                                             @foreach ($items as $item)
-                                                <x-schedule-item name="{{ $item->name }}"
-                                                    service="{{ $item->service }}" />
+                                            <x-schedule-item :name="$item->name" :service="$item->service" :animeid="$item->anime_id" />
                                             @endforeach
                                         </div>
                                     @endforeach

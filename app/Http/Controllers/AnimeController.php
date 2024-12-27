@@ -82,6 +82,7 @@ class AnimeController extends Controller
 
         // Store item in corresponding schedule
         $scheduleItem = new ScheduleItem([
+            'anime_id' => $anime['mal_id'],
             'name' => $title,
             'day' => $airingUTC->format('l'),
             'time' => $airingUTC->format('H:i:s'),

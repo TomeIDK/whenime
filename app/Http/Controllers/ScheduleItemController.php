@@ -56,7 +56,9 @@ class ScheduleItemController extends Controller
         $convertedAiring = $this->timezoneService->convertToUTC($request->time, $request->day, $timezone);
 
 
+        // TODO: Remove hardcoded ID
         ScheduleItem::create([
+            'anime_id' => 52991,
             'schedule_id' => $scheduleId,
             'name' => $request->name,
             'day' => $convertedAiring->format('l'),

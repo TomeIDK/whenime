@@ -35,4 +35,16 @@
     color: #6B7280; /* Adjust the color of the handle or icon when toggled OFF */
 }
 
+.tooltip-content {
+    @apply invisible absolute bottom-full left-1/2 translate-y-full translate-x-[-25%] bg-white rounded-lg border border-muted p-2 shadow-sm text-center max-w-80
+}
+
+.tooltip-content::after {
+    content: ""
+}
+
+.item-tooltip:hover .tooltip-content{
+    @apply visible
+}
+
 

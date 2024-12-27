@@ -10,13 +10,15 @@ class ScheduleItem extends Component
 {
     public $name;
     public $service;
+    public $animeid;
     /**
      * Create a new component instance.
      */
-    public function __construct($name, $service)
+    public function __construct($name, $service, $animeid)
     {
         $this->name = $name;
         $this->service = $service;
+        $this->animeid = $animeid;
     }
 
     /**

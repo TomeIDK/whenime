@@ -102,6 +102,7 @@ class MySchedulesController extends Controller
         'Other',
         ];
 
+
         // Group items with the same day and time slot
         $groupedItems = [];
         foreach ($schedule->scheduleItems as $item) {
