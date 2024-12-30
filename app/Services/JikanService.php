@@ -84,17 +84,54 @@ class JikanService {
         return $this->makeRequest('anime/' . $id);
     }
 
-    // Search for anime with given query, optionally filter by airing status
-    public function searchAnimeByName($query, $isAiringOnly = false) {
+    // Search for anime by name (Japanese title)
+    // params: TV, sfw, ordered start_date desc,
+    public function searchAnimeByName($query, $onlyAiringAndUpcoming = false, $limitPerPage = 9, $page = 1) {
         $params = [
-            'q' => $query
+            'q' => $query,
+            'type' => 'tv',
+            'sfw',
+            'limit' => $limitPerPage,
+            'page' => $page,
+            'order_by' => 'mal_id',
+            'sort' => 'desc',
         ];
 
-        if($isAiringOnly) {
-            $params['status'] = 'airing';
+        if($onlyAiringAndUpcoming) {
+            $airingResponse = $this->makeRequest('anime', array_merge($params, ['status' => 'airing']));
+            $upcomingResponse = $this->makeRequest('anime', array_merge($params, ['status' => 'upcoming']));
+
+            $combinedResults = array_merge($airingResponse['data'] ?? [], $upcomingResponse['data'] ?? []);
+        } else {
+            $combinedResults = $this->makeRequest('anime', $params)['data'] ?? [];
         }
 
-        return $this->makeRequest('anime', ['q'=> $query]);
+                    $uniqueResults = [];
+            foreach ($combinedResults as $anime) {
+                $uniqueResults[$anime['mal_id']] = $anime;
+            }
+            $finalResults = array_values($uniqueResults);
+
+        if (empty($finalResults)) {
+            return [
+                'data' => [],
+                'total' => 0,
+                'current_page' => $page,
+                'last_page' => 1,
+            ];
+        }
+
+
+            $totalResults = count($finalResults);
+            $offset = ($page - 1) * $limitPerPage;
+            $paginatedResults = array_slice($finalResults, $offset, $limitPerPage);
+
+            return [
+                'data' => $paginatedResults,
+                'total' => $totalResults,
+                'current_page' => $page,
+                'last_page' => ceil($totalResults / $limitPerPage),
+            ];
     }
 
         // Get upcoming  anime (not yet airing)

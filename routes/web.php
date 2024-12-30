@@ -4,7 +4,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\FAQController;
-use App\Http\Controllers\JikanController;
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\EmailChangeController;

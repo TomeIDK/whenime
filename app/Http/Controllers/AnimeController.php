@@ -25,7 +25,14 @@ class AnimeController extends Controller
     }
 
     public function index(Request $request) {
+        $query = $request->search;
         $page = $request->get('page', 1);
+
+        $searchResults = null;
+
+        if ($query) {
+            $searchResults = $this->jikanService->searchAnimeByName($query, $request->onlyAiringAndUpcoming);
+        }
 
         $airing = $this->jikanService->getTopAiringAnime($page, 6)['data'];
 
@@ -38,7 +45,7 @@ class AnimeController extends Controller
         $daysUntilNextSeason = $this->seasonService->getDaysUntilNextSeason();
         $currentSeason = $this->seasonService->getCurrentSeason();
 
-        return view('anime.explore', compact('airing', 'popularUpcoming', 'nextSeason', 'daysUntilNextSeason', 'currentSeason'));
+        return view('anime.explore', compact('airing', 'popularUpcoming', 'nextSeason', 'daysUntilNextSeason', 'currentSeason', "searchResults"));
     }
 
     public function show($id) {

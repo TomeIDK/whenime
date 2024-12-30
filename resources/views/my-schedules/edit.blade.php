@@ -16,20 +16,6 @@
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg> Add Anime</button>
             </div>
-            <div class="flex mb-4 space-x-4">
-                <select class="w-full select select-bordered">
-                    <option value="">All Days</option>
-                    @foreach ($uniqueDays as $day)
-                        <option value="{{ $day }}">{{ $day }}</option>
-                    @endforeach
-                </select>
-                <select class="w-full select select-bordered">
-                    <option value="">All Platforms</option>
-                    @foreach ($uniqueServices as $service)
-                        <option value="{{ $service }}">{{ $service }}</option>
-                    @endforeach
-                </select>
-            </div>
         </div>
         <div class="w-1/2 m-auto">
             @foreach ($uniqueDays as $day)

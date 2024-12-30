@@ -56,6 +56,7 @@ export default {
             {
                 custom: {
                     primary: "#4A90E2",
+                    white: "#ffffff"
                 },
             },
         ],
