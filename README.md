@@ -87,11 +87,11 @@ Jikan handler + retryer: https://chatgpt.com/share/676d9631-353c-800b-9344-d4e68
 - [x] Admin ontvangt een email met de inhoud van het formulier bij versturen
 
 ### Extra features
-- [ ] Overzicht van ingevulde contactformulieren voor admins in een admin-panel
+- [x] Overzicht van ingevulde contactformulieren voor admins in een admin-panel
 - [ ] Gebruikers kunnen commentaar achterlaten op nieuwtjes
 - [ ] Gebruikers kunnen berichten posten op andere profielen of privéberichten sturen
 - [ ] Gebruikers kunnen FAQ-vragen toevoegen
-- [ ] Voeg logische extra features toe passend bij het projectonderwerp
+- [x] Voeg logische extra features toe passend bij het projectonderwerp
 
 ### Technische requirements
 
@@ -102,23 +102,23 @@ Jikan handler + retryer: https://chatgpt.com/share/676d9631-353c-800b-9344-d4e68
 
 #### Control structures
 - [ ] XSS protection
-- [ ] CSRF protection
+- [x] CSRF protection
 - [ ] Client-side validation
 
 #### Routes
 - [ ] Alle routes gebruiken controller methods
 - [ ] Routes bevatten benodigde middleware
-- [ ] Groepeer routes indien mogelijk
+- [x] Groepeer routes indien mogelijk
 
 #### Controllers
-- [ ] Gebruik controllers voor logica-opdeling
+- [x] Gebruik controllers voor logica-opdeling
 - [ ] Gebruik resource controllers voor CRUD-operaties
 
 #### Models
-- [ ] Gebruik Eloquent models per entiteit
-- [ ] Maak gebruik van relaties:
+- [x] Gebruik Eloquent models per entiteit
+- [x] Maak gebruik van relaties:
   - [x] Minstens één one-to-many relatie
-  - [ ] Minstens één many-to-many relatie
+  - [x] Minstens één many-to-many relatie
 
 #### Database
 - [ ] Database moet werken met `php artisan migrate:fresh --seed`
