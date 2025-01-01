@@ -101,18 +101,18 @@ Jikan handler + retryer: https://chatgpt.com/share/676d9631-353c-800b-9344-d4e68
 - [x] Gebruik cursus- en oefeningstechnieken
 
 #### Control structures
-- [ ] XSS protection
+- [x] XSS protection
 - [x] CSRF protection
-- [ ] Client-side validation
+- [x] Client-side validation
 
 #### Routes
-- [ ] Alle routes gebruiken controller methods
-- [ ] Routes bevatten benodigde middleware
+- [x] Alle routes gebruiken controller methods
+- [x] Routes bevatten benodigde middleware
 - [x] Groepeer routes indien mogelijk
 
 #### Controllers
 - [x] Gebruik controllers voor logica-opdeling
-- [ ] Gebruik resource controllers voor CRUD-operaties
+- [x] Gebruik resource controllers voor CRUD-operaties
 
 #### Models
 - [x] Gebruik Eloquent models per entiteit
