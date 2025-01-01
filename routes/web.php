@@ -7,6 +7,7 @@ use App\Http\Controllers\FAQController;
 use App\Http\Controllers\AnimeController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\EmailChangeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MySchedulesController;
@@ -17,9 +18,7 @@ use App\Http\Middleware\OwnerOrAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 // Home
-Route::get('/', function () {
-    return view('home');
-})-> name("home");
+Route::get('/', [HomeController::class, 'show'])->name("home");
 
 Route::get('/explore', [AnimeController::class, 'index'])->name('anime.index');
 
@@ -167,12 +166,14 @@ Route::prefix('anime')->group(function () {
 
 // Settings
 Route::prefix('/settings')->group(function () {
-    Route::get('/', [SettingsController::class, 'index'])->name('settings');
-    Route::patch('/update', [SettingsController::class, 'update'])->name('settings.update');
-    Route::get('/change-password', [PasswordController::class, 'edit'])->name('settings.change-password');
-    Route::patch('/change-password/change', [PasswordController::class, 'change'])->name('settings.change-password.change');
-    Route::get('/change-email', [EmailChangeController::class, 'edit'])->name('settings.change-email');
-    Route::post('/change-email/change', [EmailChangeController::class, 'store'])->name('settings.change-email.change');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/', [SettingsController::class, 'index'])->name('settings');
+        Route::patch('/update', [SettingsController::class, 'update'])->name('settings.update');
+        Route::get('/change-password', [PasswordController::class, 'edit'])->name('settings.change-password');
+        Route::patch('/change-password/change', [PasswordController::class, 'change'])->name('settings.change-password.change');
+        Route::get('/change-email', [EmailChangeController::class, 'edit'])->name('settings.change-email');
+        Route::post('/change-email/change', [EmailChangeController::class, 'store'])->name('settings.change-email.change');
+    });
 });
 
 require __DIR__.'/auth.php';
