@@ -79,16 +79,19 @@ class ProfileController extends Controller
         ];
 
         if ($currentSchedule) {
-            // Sort days and services in a custom order
-            $uniqueDays = $currentSchedule->scheduleItems->pluck('day')->unique()->sortBy(function($day) use ($dayOrder) {
-                return array_search($day, $dayOrder);
-            });
-
             // Group items with the same day and time slot
             $groupedItems = [];
             foreach ($currentSchedule->scheduleItems as $item) {
-                $groupedItems[$item->day][$item->time][] = $item;
+                $convertedDateTime = format_user_time_from_utc(date('H:i', strtotime($item->time)), $item->day);
+
+                $groupedItems[$convertedDateTime['day']][$convertedDateTime['time']][] = $item;
             }
+
+            // Sort days and services in a custom order
+            $uniqueDays = collect(array_keys($groupedItems))->sortBy(function($day) use ($dayOrder) {
+                return array_search($day, $dayOrder);
+            });
+
             return view('profile.profile', compact('user', 'isCurrentUser', 'currentSchedule', 'uniqueDays', 'groupedItems'));
         }
 

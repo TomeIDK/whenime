@@ -5,8 +5,8 @@
 
 @section('content')
 
-    <div class="flex flex-col items-center gap-8 p-4 mx-auto mt-32">
-        <div class="flex flex-col gap-12 w-96">
+    <div class="flex flex-col items-center p-4 mt-16">
+        <div class="flex flex-col gap-4 w-96">
 
             <h1 class="text-6xl font-bold text-center">Contact Us</h1>
 

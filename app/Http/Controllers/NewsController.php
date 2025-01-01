@@ -21,7 +21,7 @@ class NewsController extends Controller
     }
 
     public function show($id){
-        $currentNews = News::findOrFail($id);
+        $currentNews = News::with('categories')->findOrFail($id);
         $newsItems = News::all('id', 'title');
 
         return view('news.news', compact('currentNews', 'newsItems'));

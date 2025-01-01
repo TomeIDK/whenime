@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Services\JikanService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -14,10 +15,12 @@ use App\Services\SeasonService;
 class MySchedulesController extends Controller
 {
     protected $seasonService;
+    protected $jikanService;
 
-    public function __construct(SeasonService $seasonService)
+    public function __construct(SeasonService $seasonService, JikanService $jikanService)
     {
         $this->seasonService = $seasonService;
+        $this->jikanService = $jikanService;
     }
 
     public function index() {
@@ -75,7 +78,7 @@ class MySchedulesController extends Controller
         return Redirect::route('my-schedules')->with('success', 'Schedule created successfully');
     }
 
-    public function edit($season, $year) {
+    public function edit($season, $year, Request $request) {
         $ownershipCheck = $this->checkOwnershipByScheduleName($season, $year);
 
         if ($ownershipCheck instanceof \Illuminate\Http\RedirectResponse) {
@@ -102,6 +105,16 @@ class MySchedulesController extends Controller
         'Other',
         ];
 
+        // Search
+        $query = $request->search;
+        $page = $request->get('page', 1);
+
+        $searchResults = null;
+
+        if ($query) {
+            $searchResults = $this->jikanService->searchAnimeByName($query, $request->onlyAiringAndUpcoming);
+        }
+
 
         // Group items with the same day and time slot
         $groupedItems = [];
@@ -122,7 +135,7 @@ class MySchedulesController extends Controller
 
 
 
-        return view('my-schedules.edit', compact('schedule', 'uniqueDays', 'uniqueServices', 'groupedItems'));
+        return view('my-schedules.edit', compact('schedule', 'uniqueDays', 'uniqueServices', 'groupedItems', 'searchResults'));
     }
 
     public function update() {

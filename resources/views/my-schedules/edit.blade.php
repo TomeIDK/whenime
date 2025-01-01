@@ -3,21 +3,147 @@
 @section('title', $schedule->season . ' ' . $schedule->year)
 
 @section('content')
-    <div class="p-4">
-        <h1 class="my-16 text-6xl font-bold text-center">{{ $schedule->season . ' ' . $schedule->year }}</h1>
+    <div class="flex flex-col items-center gap-8 p-4">
+        <h1 class="text-6xl font-bold text-center">{{ $schedule->season . ' ' . $schedule->year }}</h1>
 
-        <div class="flex flex-col w-1/2 gap-4 m-auto mb-4">
-            <div class="self-end">
-                <button class="font-bold text-white border-none btn bg-primary hover:bg-primary-hover-dark btn-sm"
-                    onclick="create_schedule_item.showModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 22" fill="none"
-                        stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="bevel">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg> Add Anime</button>
-            </div>
+        {{-- Search --}}
+        <div class="w-3/4">
+            <form method="GET" action="{{ route('my-schedules.edit', [$schedule->season, $schedule->year]) }}"
+                class="flex flex-col w-1/2 gap-1 justify-self-center">
+                <label class="flex items-center gap-2 pr-0 border-r-0 input input-bordered">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" class="grow" name="search" placeholder="Search"
+                        value="{{ request('search') }}" />
+                    <x-cta-button text="Search" class="px-6 rounded-l-none" />
+                </label>
+                <div class="form-control">
+                    <label class="flex flex-row justify-start gap-1 cursor-pointer label">
+                        <input type="checkbox" {{ request('onlyAiringAndUpcoming') ? 'checked' : '' }}
+                            name="onlyAiringAndUpcoming"
+                            class="checkbox checkbox-sm border-muted [--chkbg:rgb(74,144,226)] [--chkfg:white] rounded" />
+                        <span class="label-text">Airing and upcoming releases only</span>
+                    </label>
+                </div>
+            </form>
+            @if ($searchResults)
+                <div>
+                    <h1 class="pb-2 pr-12 text-2xl font-bold border-b w-fit">Search Results
+                        ({{ $searchResults['total'] }})</h1>
+                    <div class="grid grid-cols-3 pb-4 grid-rows-auto">
+                        @foreach ($searchResults['data'] as $index => $result)
+                            <div class="flex p-4">
+                                <img src="{{ $result['images']['jpg']['image_url'] }}" alt=""
+                                    class="object-cover max-h-36 aspect-auto">
+
+                                <div class="flex flex-col pl-4 grow">
+                                    {{-- Title --}}
+                                    @foreach ($result['titles'] as $title)
+                                        @if ($title['type'] == 'Default')
+                                            <a href="{{ route('anime.show', $result['mal_id']) }}"
+                                                class="hover:underline hover:text-primary">
+                                                <h2 class="mb-2 font-medium">{{ $title['title'] }}</h2>
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                    {{-- Status --}}
+                                    <div class="flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="2"></circle>
+                                            <path
+                                                d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14">
+                                            </path>
+                                        </svg>
+                                        <p>{{ $result['status'] }}</p>
+                                    </div>
+                                    @if ($result['aired']['from'])
+                                        {{-- Start Date --}}
+                                        <div class="flex items-center gap-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="4" width="18" height="18" rx="2"
+                                                    ry="2">
+                                                </rect>
+                                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                                            </svg>
+                                            <p>{{ date('M j, Y', strtotime($result['aired']['from'])) }} to
+                                                {{ $result['aired']['to'] ? date('M j, Y', strtotime($result['aired']['to'])) : 'Unknown' }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if ($result['status'] != 'Finished Airing' && $result['broadcast']['string'])
+                                        {{-- Broadcast --}}
+                                        <div class="flex items-center gap-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <polyline points="12 6 12 12 16 14"></polyline>
+                                            </svg>
+                                            <p>{{ $result['broadcast']['string'] !== 'Unknown'
+                                                ? format_user_time_from_jst($result['broadcast']['time'], substr($result['broadcast']['day'], 0, -1))['day'] .
+                                                    's at ' .
+                                                    format_user_time_from_jst($result['broadcast']['time'], substr($result['broadcast']['day'], 0, -1))['time']
+                                                : 'TBA' }}
+                                            </p>
+                                        </div>
+                                    @endif
+
+                                    <div class="flex gap-3">
+                                        @if ($result['score'])
+                                            {{-- Score --}}
+                                            <div class="flex items-center gap-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <polygon
+                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                                    </polygon>
+                                                </svg>
+                                                <p>{{ $result['score'] }}</p>
+                                            </div>
+                                        @endif
+
+                                        {{-- Episodes --}}
+                                        @if ($result['episodes'])
+                                            <div class="flex items-center gap-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                </svg>
+                                                <p>{{ $result['episodes'] }} eps.</p>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    @if ($result['season'])
+                                        <form method="POST" action="{{ route('anime.store', $result['mal_id']) }}"
+                                            class="self-end mt-auto">
+                                            @csrf
+                                            <x-cta-button class="btn-sm"
+                                                text="Add to {{ strtoupper($result['season'][0]) }}{{ substr($result['season'], 1) }} {{ $result['year'] }}" />
+                                        </form>
+                                    @endif
+
+                                </div>
+
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
-        <div class="w-1/2 m-auto">
+
+        <div class="w-1/2">
             @foreach ($uniqueDays as $day)
                 <div class="collapse collapse-plus">
                     <input type="checkbox" name="my-accordion-{{ $day }}" checked />
@@ -38,8 +164,8 @@
                                                     class="flex flex-col items-center gap-1 bg-transparent border-none shadow-none btn btn-sm hover:bg-primary"
                                                     onclick="showUpdateModal({{ $item->id }}, '{{ $item->name }}', '{{ format_user_time_from_utc($item->time, $item->day)['day'] }}', '{{ format_user_time_from_utc($item->time)['time'] }}', '{{ $item->service }}')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        viewBox="0 0 24 24" fill="none" stroke="#000000"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                         <polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon>
                                                     </svg>
                                                 </button>
@@ -48,15 +174,17 @@
                                                     class="flex flex-col items-center gap-1 bg-transparent border-none shadow-none btn btn-sm hover:bg-delete-hover"
                                                     onclick="showDeleteModal({{ $item->id }})">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        viewBox="0 0 24 24" fill="none" stroke="#000000"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                         <polyline points="3 6 5 6 21 6"></polyline>
                                                         <path
                                                             d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
                                                         </path>
-                                                        <line x1="10" y1="11" x2="10" y2="17">
+                                                        <line x1="10" y1="11" x2="10"
+                                                            y2="17">
                                                         </line>
-                                                        <line x1="14" y1="11" x2="14" y2="17">
+                                                        <line x1="14" y1="11" x2="14"
+                                                            y2="17">
                                                         </line>
                                                     </svg>
                                                 </button>
@@ -81,7 +209,8 @@
                 <div class="flex justify-center gap-4 mt-2 modal-action">
 
                     {{-- Create Schedule Item --}}
-                    <form method="POST" action="{{ route('schedule-item.store', [$schedule->season, $schedule->year]) }}"
+                    <form method="POST"
+                        action="{{ route('schedule-item.store', [$schedule->season, $schedule->year]) }}"
                         class="flex flex-col gap-6">
                         @csrf
                         <div>

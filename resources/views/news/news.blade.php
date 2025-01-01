@@ -12,7 +12,7 @@
             </label>
             <x-news-item id="{{ $currentNews->id }}" title="{{ $currentNews->title }}"
                 src="{{ $currentNews->image }}" content="{{ $currentNews->content }}"
-                publishedDate="{{ $currentNews->created_at }}" />
+                publishedDate="{{ $currentNews->created_at }}" categories="{{ $currentNews->categories->pluck('name')->join(',') }}" />
         </div>
         <div class="border-t shadow-md drawer-side">
             <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>

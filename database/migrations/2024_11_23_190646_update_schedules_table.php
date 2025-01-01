@@ -27,7 +27,6 @@ class UpdateSchedulesTable extends Migration
     public function down(): void
     {
         Schema::table('schedules', function (Blueprint $table) {
-            $table->string('name')->after('user_id');
             $table->dropUnique('unique_schedule');
             $table->dropColumn(['year', 'season']);
         });

@@ -90,4 +90,3 @@ use Illuminate\Support\Facades\Auth;
             return ['day' => null, 'time' => $time];
         }
     }
-

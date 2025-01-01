@@ -13,16 +13,18 @@ class NewsItem extends Component
     public $src;
     public $content;
     public $publishedDate;
+    public $categories;
     /**
      * Create a new component instance.
      */
-    public function __construct($id, $title, $src, $content, $publishedDate)
+    public function __construct($id, $title, $src, $content, $publishedDate, $categories)
     {
         $this->id = $id;
         $this->title = $title;
         $this->src = $src;
         $this->content = $content;
         $this->publishedDate = date("d/m/Y", strtotime($publishedDate));
+        $this->categories = explode(',', ($categories));
     }
 
     /**

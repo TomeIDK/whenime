@@ -16,14 +16,19 @@
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-1">
                     <div class="flex gap-2">
-                        <div class="flex flex-col items-center">
-                            <div class="font-medium text-white badge bg-primary">RANK</div>
-                            <p class="text-2xl font-medium">#{{ $anime['rank'] }}</p>
-                        </div>
-                        <div class="flex flex-col items-center justify-around">
-                            <div class="font-medium text-white badge bg-primary">SCORE</div>
-                            <p class="text-2xl font-medium">{{ $anime['score'] }}</p>
-                        </div>
+                        @if ($anime['rank'])
+                            <div class="flex flex-col items-center">
+                                <div class="font-medium text-white badge bg-primary">RANK</div>
+                                <p class="text-2xl font-medium">#{{ $anime['rank'] }}</p>
+                            </div>
+                        @endif
+                        @if ($anime['score'])
+                            <div class="flex flex-col items-center justify-around">
+                                <div class="font-medium text-white badge bg-primary">SCORE</div>
+                                <p class="text-2xl font-medium">{{ $anime['score'] }}</p>
+                            </div>
+                        @endif
+
                         <div class="flex flex-col items-center justify-around">
                             <div class="font-medium text-white badge bg-primary">MEMBERS</div>
                             <p class="text-2xl font-medium">{{ number_format($anime['members']) }}</p>
@@ -33,8 +38,11 @@
                             <p class="text-2xl font-medium">{{ $anime['type'] }}</p>
                         </div>
                     </div>
-                    <small class="ml-1 text-xs text-discard">Voted by {{ number_format($anime['scored_by']) }}
-                        users</small>
+                    @if ($anime['rank'])
+                        <small class="ml-1 text-xs text-discard">Voted by {{ number_format($anime['scored_by']) }}
+                            users</small>
+                    @endif
+
                 </div>
                 <div class="flex flex-col gap-1 ml-1">
 
