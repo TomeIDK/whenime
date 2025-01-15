@@ -77,7 +77,7 @@ Since some directories are excluded from GIT, copy the following folder from the
 - `news_images`
 - `profile_pictures`
 
-Place these folders in `/storage/app/public`
+Place these folders in `/storage/app/public` and `/public/storage`
 
 ### 9. Start the project
 Compile the frontend assets: `npm run dev`
