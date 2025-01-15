@@ -17,5 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(FAQCategorySeeder::class);
         $this->call(FAQQuestionSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(NewsSeeder::class);
+        $this->call(CategoryNewsSeeder::class);
+        $this->call(ContactFormSeeder::class);
+        $this->call(CreateUserSettings::class);
     }
 }

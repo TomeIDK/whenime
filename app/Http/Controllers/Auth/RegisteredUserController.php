@@ -54,8 +54,7 @@ class RegisteredUserController extends Controller
                 'lowercase', 
                 'email', 
                 'max:255', 
-                'unique:user,email',
-                'unique:user,new_email'
+                'unique:users,email',
             ],
             'password' => [
                 'required', 

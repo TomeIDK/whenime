@@ -51,8 +51,9 @@
                         <span class="text-red-500 mt-2 label-text-alt">{{ $message }}</span>
                     @enderror
 
-                    <label class="label cursor-pointer flex flex-row justify-start gap-1">
-                        <input type="checkbox" name="remember" class="checkbox checkbox-xs rounded justify-start" />
+                    <label class="flex flex-row justify-start gap-1 cursor-pointer label">
+                        <input type="checkbox" name="remember"
+                            class="checkbox checkbox-xs justify-start border-muted [--chkbg:rgb(74,144,226)] [--chkfg:white] rounded" />
                         <span class="label-text">Remember me</span>
                     </label>
                     <x-cta-button text="Login" class="w-full" />

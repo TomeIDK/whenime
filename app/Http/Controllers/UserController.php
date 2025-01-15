@@ -39,7 +39,7 @@ class UserController extends Controller
                 'lowercase', 
                 'email', 
                 'max:255', 
-                'unique:user,email',
+                'unique:users,email',
             ],
             'password' => [
                 'required', 
