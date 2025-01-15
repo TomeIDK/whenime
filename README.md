@@ -45,6 +45,7 @@ MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS="hello@example.com"
 MAIL_FROM_NAME="Whenime"
 ```
+Generate the application key: `php artisan key:generate`
 ### 3. Install dependencies
 Install PHP dependencies: `composer install`
 
@@ -102,6 +103,7 @@ Jikan handler + retryer: https://chatgpt.com/share/676d9631-353c-800b-9344-d4e68
 # Features
 ### Normal user
 - Search for anime and filter by airing and upcoming releases only
+- View anime details
 - Add anime to a schedule
 - View news
 - View FAQ
