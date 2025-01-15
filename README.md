@@ -100,7 +100,7 @@ XSS, CSRF, Cors Explanation: https://chatgpt.com/share/673fa303-4d44-800b-8bf5-7
 Jikan handler + retryer: https://chatgpt.com/share/676d9631-353c-800b-9344-d4e68fa6850a  
 
 # Features
-## Normal user
+### Normal user
 - Search for anime and filter by airing and upcoming releases only
 - Add anime to a schedule
 - View news
@@ -110,7 +110,7 @@ Jikan handler + retryer: https://chatgpt.com/share/676d9631-353c-800b-9344-d4e68
 - View and edit your profile
 - Change timezone and time format settings
 
-## Admins
+### Admins
 - Go to admin dashboard
 - Manage users (create, edit profile, delete, promote/demote)
 - Manage news (create, edit, delete)
