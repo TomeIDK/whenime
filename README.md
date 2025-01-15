@@ -99,6 +99,23 @@ Time settings helper: https://chatgpt.com/share/6769a636-cb00-800b-a3a8-e341f0ff
 XSS, CSRF, Cors Explanation: https://chatgpt.com/share/673fa303-4d44-800b-8bf5-7d8fc91b1d05  
 Jikan handler + retryer: https://chatgpt.com/share/676d9631-353c-800b-9344-d4e68fa6850a  
 
+# Features
+## Normal user
+- Search for anime and filter by airing and upcoming releases only
+- Add anime to a schedule
+- View news
+- View FAQ
+- Send a contact form
+- Create, edit, delete a schedule
+- View and edit your profile
+- Change timezone and time format settings
+
+## Admins
+- Go to admin dashboard
+- Manage users (create, edit profile, delete, promote/demote)
+- Manage news (create, edit, delete)
+- Manage FAQ (create, edit, delete)
+- Manage contact forms (delete, read, change status)
 
 
 # Documentation
